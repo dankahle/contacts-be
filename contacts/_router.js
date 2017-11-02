@@ -1,13 +1,16 @@
 var express = require('express'),
-  repo = require('./data');
+  ContactsBusiness = require('./business').ContactsBusiness,
+  data = require('./data'),
+  // ContactsData = require('./data').ContactsData,
+  bl = null;
+  // dt = null;
 
 router = express.Router();
 module.exports = router;
 
-
 router.get('/', function (req, res) {
   setTimeout(() => {
-    res.send(repo.getAll());
+    res.send(data.getAll());
   }, 1000)
 })
 
@@ -36,7 +39,7 @@ router.get('/:id', function (req, res, next) {
       });
     }
 
-    const user = repo.getOne(req.params.id);
+    const user = data.getOne(req.params.id);
     if (user) {
       res.send(user);
     } else {
@@ -48,12 +51,18 @@ router.get('/:id', function (req, res, next) {
   },1000)
 })
 
-router.post('/', function (req, res) {
-  res.send(repo.add(req.body));
+router.use(function (req, res, next) {
+  createBusinessAndDataObjects(req, res, next);
+  next();
+})
+
+router.post('/', function (req, res, next) {
+  // createBusinessAndData(req, res, next);
+  bl.addContact()
 })
 
 router.put('/:id', function (req, res) {
-  const user = repo.update(req.params.id, req.body);
+  const user = data.update(req.params.id, req.body);
   if (user) {
     res.send(user);
   }
@@ -61,10 +70,14 @@ router.put('/:id', function (req, res) {
 })
 
 router.delete('/:id', function (req, res) {
-  const count = repo.remove(req.params.id);
+  const count = data.remove(req.params.id);
   if (count) {
     res.send({count: count});
   }
   res.status(404).end();
 })
 
+function createBusinessAndDataObjects(req, res, next) {
+  bl = new ContactsBusiness(req, res, next);
+
+}

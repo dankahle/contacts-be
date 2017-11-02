@@ -1,5 +1,19 @@
 
 
 
+node-base:
+validate
+errorHandler
+
+then?
+
+
+move tv4 and others to node super project?
+
+
+you're working on the tv4 validation. updated the schema so should be bitching about it (erequires id an name), but it calls next and says next is not a function. Hmmm.
+
+
+
 
 
