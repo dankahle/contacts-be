@@ -44,39 +44,6 @@
         }
       }
     },
-    "/contacts/{id}": {
-      "get": {
-        "tags": [
-          "contact"
-        ],
-        "summary": "get one contact",
-        "description": "return one contact",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "contact id",
-            "required": true,
-            "type": "string",
-            "format": "guid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "../api/contacts/schema/schema-response.json"
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          }
-        }
-      }
-    },
     "/contact": {
       "post": {
         "tags": [
@@ -108,7 +75,38 @@
         }
       }
     },
-    "/contact/{id}": {
+    "/contacts/{id}": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "get one contact",
+        "description": "return one contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "contact id",
+            "required": true,
+            "type": "string",
+            "format": "guid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../api/contacts/schema/schema-response.json"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
       "put": {
         "tags": [
           "contact"
@@ -161,10 +159,7 @@
             "description": "User not found"
           }
         }
-      }
-    },
-
-    "/contact/{id}": {
+      },
       "delete": {
         "tags": [
           "contact"
@@ -182,8 +177,12 @@
         ],
         "responses": {
           "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../api/contacts/schema/schema-response.json"
+            }
           },
-          "400": {
+         "400": {
             "description": "Invalid id"
           },
           "404": {
@@ -192,9 +191,6 @@
         }
       }
     }
-
-
-
   },
   "definitions": {
     "ApiResponse": {
