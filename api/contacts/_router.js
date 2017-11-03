@@ -6,6 +6,8 @@ let bl = null, dl = null;
 router = express.Router();
 module.exports = router;
 
+router.get('/schema/*', express.static('api/contacts'));
+
 router.use(function (req, res, next) {
   bl = new ContactsBusiness(req, res, next);
   next();

@@ -1,5 +1,5 @@
 const chance = new require('chance')(),
-  schema = require('./schema.json'),
+  schema = require('./schema/schema-db.json'),
   ContactsData = require('./data');
   base = require('node-base');
   BasicError = base.errors.BasicError;
