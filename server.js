@@ -2,7 +2,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   apiErrorHandler = require('api-error-handler'),
   docsRouter = require('./docs/_router'),
-  contactsRouter = require('./contacts/_router'),
+  contactsRouter = require('./api/contacts/_router'),
   cors = require('cors'),
   base = require('node-base');
 
