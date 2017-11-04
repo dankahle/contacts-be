@@ -8,6 +8,11 @@ bash seed-db.sh
 ```
 **start server**
 ```bash
-node server.js
+node server.js port (port defaults to 3000)
 ```
+**view api docs**
+```bash
+http://localhost:port/docs
+```
+
 

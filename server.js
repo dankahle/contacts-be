@@ -1,6 +1,7 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   expressMongoDb = require('express-mongo-db'),
+  process = require('process'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
   cors = require('cors'),
@@ -13,9 +14,11 @@ var contacts = [
 ]
 
 let init = false;
-const port = 3005,
-  app = express();
 
+let port = parseInt(process.argv[2]);
+port = isNaN(port) ? 3000 : port;
+
+const app = express();
 app.use(expressMongoDb('mongodb://localhost/contacts'));
 
 app.use(function (req, res, next) {
