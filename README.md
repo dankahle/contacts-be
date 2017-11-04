@@ -1,8 +1,18 @@
 # contacts-be  
 
 The backend rest api for the contacts-fe project
-  
-**seed database**
+
+### features
+* redoc documentation from json schema
+* tv4 json schema validation
+* mongodb node native driver for mongo access
+* node-base project (separate repo) for shared node functionality
+
+### todo
+* confit config file for environment dependent configuration (put port in there)
+
+### get started  
+**seed mongodb database** (assumes a local instance)
 ```bash
 bash seed-db.sh
 ```
@@ -14,5 +24,4 @@ node server.js port (port defaults to 3000)
 ```bash
 http://localhost:port/docs
 ```
-
 
