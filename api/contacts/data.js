@@ -1,12 +1,6 @@
 var _ = require('lodash');
 
-var users = [
-  {id: 1, name: 'dank', age: 50, dcId: 4},
-  {id: 2, name: 'carl', age: 60, dcId: 5},
-  {id: 3, name: 'jim', age: 40, dcId: 6},
-]
-
-let req = null, res = null, next = null;
+let req = null, res = null, next = null, db = null;
 
 class ContactsData {
 
@@ -14,37 +8,30 @@ class ContactsData {
     req = _req;
     res = _res;
     next = _next;
+    db = req.db.collection('contacts');
   }
 
   getAll() {
-    return users;
+    return db.find({}, {_id:0})
+      .sort({name:1})
+      // .project({_id:0})
+      .toArray();
   }
 
   getOne(id){
-    return getOneUser(id);
+    return db.findOne({id: id}, {_id:0});
   }
 
-  add(user) {
-    user.id = getNextUserId();
-    users.push(user);
-    return user;
+  add(contact) {
+    return db.insertOne(contact);
   }
 
-  update(id, body) {
-    const user = getOneUser(id);
-    if (user) {
-      return _.merge(user, body);
-    } else {
-      return;
-    }
+  update(id, contact) {
+    return db.updateOne({id: id}, contact);
   }
 
   remove(id) {
-    var user = getOneUser(id);
-    if(!user)
-      return 0;
-    _.pull(users, user);
-    return 1;
+    return db.removeOne({id: id});
   }
 
 }
@@ -53,10 +40,10 @@ module.exports = ContactsData;
 
 
 function getNextUserId() {
-  return _.max(_.map(users, 'id')) + 1;
+  return _.max(_.map(contacts, 'id')) + 1;
 }
 
 function getOneUser(id) {
-  return _.find(users, {id: Number(id)});
+  return _.find(contacts, {id: Number(id)});
 }
 

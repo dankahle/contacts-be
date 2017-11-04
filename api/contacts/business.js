@@ -1,10 +1,12 @@
 const chance = new require('chance')(),
-  schema = require('./schema/schema-db.json'),
-  ContactsData = require('./data');
-  base = require('node-base');
+  schemaPost = require('./schema/schema-post.json'),
+  schemaPut = require('./schema/schema-put.json'),
+  ContactsData = require('./data'),
+  base = require('node-base'),
+  Validate = base.Validate,
   BasicError = base.errors.BasicError;
 
-  let req = null, res = null, next = null, dl = null;
+let req = null, res = null, next = null, dl = null;
 
 class ContactsBusiness {
 
@@ -16,47 +18,95 @@ class ContactsBusiness {
   }
 
   getAll() {
-    res.send(dl.getAll());
+    dl.getAll()
+      .then(contacts => res.send(contacts))
+      .catch(e => next(e));
   }
 
   getOne() {
-    const user = dl.getOne(req.params.id);
-    if (user) {
-      res.send(user);
-    } else {
-      next(new BasicError('User not found', 404));
+    const id = req.params.id;
+    if (!Validate.validateGuid(id)) {
+      next(new BasicError('Invalid id parameter', 400));
+      return;
     }
+
+    dl.getOne(id)
+      .then(contact => {
+        if (!contact) {
+          next(new BasicError('Contact not found', 404));
+        } else {
+          res.send(contact);
+        }
+      })
+      .catch(e => next(e));
   }
 
   add() {
-    req.body.id = chance.guid();
-    const error = base.Validate.validate(req.body, schema);
+    const contact = req.body;
+    contact.id = chance.guid();
+    const error = Validate.validateObject(req.body, schemaPost);
     if (error) {
       next(error);
     } else {
-      res.send(dl.add(req.body));
+      dl.add(req.body)
+        .then(response => {
+          if (response.insertedCount !== 1) {
+            next(new BasicError('Failed to add contact', 404));
+            return;
+          } else {
+            delete contact._id;
+            res.send(contact);
+          }
+        })
+        .catch(e => next(e));
     }
   }
 
-  //dankfix: this logic work with native?
   put() {
-    const user = dl.update(req.params.id, req.body);
-    if (user) {
-      res.send(user);
+    const id = req.params.id;
+    if (!Validate.validateGuid(id)) {
+      next(new BasicError('Invalid id parameter', 400));
+      return;
+    }
+
+    const contact = req.body;
+    const error = Validate.validateObject(req.body, schemaPut);
+    if (error) {
+      next(error);
     } else {
-      next(new BasicError('User not found', 404));
+      dl.update(id, contact)
+        .then(response => {
+          if (response.matchedCount !== 1) {
+            next(new BasicError('Contact not found', 404));
+            return;
+          } else {
+            res.send(contact);
+          }
+        })
+        .catch(e => next(e));
     }
   }
 
   remove() {
-    const count = dl.remove(req.params.id);
-    if (count) {
-      res.send({count: count});
-    } else {
-      next(new BasicError('User not found', 404));
+    const id = req.params.id;
+    if (!Validate.validateGuid(id)) {
+      next(new BasicError('Invalid id parameter', 400));
+      return;
     }
+
+    dl.remove(id)
+      .then(response => {
+        if (response.deletedCount !== 1) {
+          next(new BasicError('Contact not found', 404));
+          return;
+        } else {
+          res.send({});
+        }
+      })
+      .catch(e => next(e));
   }
 
 }
+
 
 module.exports = ContactsBusiness;

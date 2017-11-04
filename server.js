@@ -1,17 +1,34 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
-  apiErrorHandler = require('api-error-handler'),
+  expressMongoDb = require('express-mongo-db'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
   cors = require('cors'),
   base = require('node-base');
 
-const port = 3005;
-const app = express()
+var contacts = [
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', age: 50},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', age: 60},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', age: 40},
+]
+
+let init = false;
+const port = 3005,
+  app = express();
+
+app.use(expressMongoDb('mongodb://localhost/contacts'));
+
 app.use(function (req, res, next) {
   console.log(req.method, req.url);
-  next();
-})
+  if (!init) {
+    init = true;
+    initialize(req)
+      .then(() => next())
+  } else {
+    next();
+  }
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -23,6 +40,12 @@ app.use('/api/contacts', contactsRouter);
 app.use(base.middleware.notFound);
 app.use(base.middleware.errorHandler);
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log(`listening on ${port}`);
 });
+
+function initialize(req) {
+  const db = req.db.collection('contacts');
+  return db.deleteMany({})
+    .then(() => db.insertMany(contacts));
+}

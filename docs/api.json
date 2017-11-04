@@ -58,7 +58,7 @@
             "description": "contact object",
             "required": true,
             "schema": {
-              "$ref": "../api/contacts/schema/schema-post-put.json"
+              "$ref": "../api/contacts/schema/schema-post.json"
             }
           }
         ],
@@ -139,7 +139,7 @@
                   "required": ["id"]
                 },
                 {
-                  "$ref": "../api/contacts/schema/schema-post-put.json"
+                  "$ref": "../api/contacts/schema/schema-put.json"
                 }
               ]
             }
@@ -156,7 +156,7 @@
             "description": "Invalid input"
           },
           "404": {
-            "description": "User not found"
+            "description": "Contact not found"
           }
         }
       },
@@ -186,7 +186,7 @@
             "description": "Invalid id"
           },
           "404": {
-            "description": "User not found"
+            "description": "Contact not found"
           }
         }
       }

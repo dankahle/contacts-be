@@ -1,0 +1,18 @@
+{
+  "allOf": [
+    {
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    {
+      "$ref": "schema-post.json"
+    }
+  ]
+}

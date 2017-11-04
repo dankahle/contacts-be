@@ -17,6 +17,7 @@
     "chance": "^1.0.12",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "express-mongo-db": "^2.0.3",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.33",
     "node-base": "file:../node-base",
