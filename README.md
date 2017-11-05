@@ -7,6 +7,7 @@ The backend rest api for the contacts-fe project
 * tv4 json schema validation
 * mongodb node native driver for mongo access
 * node-base project (separate repo) for shared node functionality
+* confit config file environment specific heirarchy
 
 ### todo
 * confit config file for environment dependent configuration (put port in there)
