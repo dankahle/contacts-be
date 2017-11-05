@@ -37,7 +37,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "../api/contacts/schema/schema-response.json"
+                "$ref": "../api/contacts/schema/schema.json"
               }
             }
           }
@@ -58,7 +58,7 @@
             "description": "contact object",
             "required": true,
             "schema": {
-              "$ref": "../api/contacts/schema/schema-post.json"
+              "$ref": "../api/contacts/schema/schemaPost.json"
             }
           }
         ],
@@ -66,7 +66,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema-response.json"
+              "$ref": "../api/contacts/schema/schema.json"
             }
           },
           "405": {
@@ -96,7 +96,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema-response.json"
+              "$ref": "../api/contacts/schema/schema.json"
             }
           },
           "400": {
@@ -139,7 +139,7 @@
                   "required": ["id"]
                 },
                 {
-                  "$ref": "../api/contacts/schema/schema-put.json"
+                  "$ref": "../api/contacts/schema/schema.json"
                 }
               ]
             }
@@ -149,7 +149,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema-response.json"
+              "$ref": "../api/contacts/schema/schema.json"
             }
           },
           "400": {
@@ -179,7 +179,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema-response.json"
+              "$ref": "../api/contacts/schema/schema.json"
             }
           },
          "400": {

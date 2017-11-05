@@ -1,0 +1,17 @@
+{
+  "dates": {
+    "type": "array",
+    "items": {
+      "title": "date",
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

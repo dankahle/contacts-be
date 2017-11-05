@@ -1,6 +1,6 @@
 const chance = new require('chance')(),
-  schemaPost = require('./schema/schema-post.json'),
-  schemaPut = require('./schema/schema-put.json'),
+  schema = require('./schema/schema.json'),
+  schemaPost = require('./schema/schemaPost.json'),
   ContactsData = require('./data'),
   base = require('node-base'),
   Validate = base.Validate,
@@ -70,7 +70,7 @@ class ContactsBusiness {
     }
 
     const contact = req.body;
-    const error = Validate.validateObject(req.body, schemaPut);
+    const error = Validate.validateObject(req.body, schema);
     if (error) {
       next(error);
     } else {

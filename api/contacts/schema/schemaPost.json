@@ -1,0 +1,175 @@
+{
+  "title": "contact",
+  "type": "object",
+  "required": ["name"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "nickName": {
+      "type": "string"
+    },
+    "fileAs": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "string"
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "title": "email",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "title": "phone",
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "title": "address",
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date"
+    },
+    "dates": {
+      "type": "array",
+      "items": {
+        "title": "date",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "websites": {
+      "type": "array",
+      "items": {
+        "title": "website",
+        "type": "object",
+        "properties": {
+          "website": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "title": "relationship",
+        "type": "object",
+        "properties": {
+          "relationship": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "IMs": {
+      "type": "array",
+      "items": {
+        "title": "IM",
+        "type": "object",
+        "properties": {
+          "IM": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "internetCalls": {
+      "type": "array",
+      "items": {
+        "title": "internet call",
+        "type": "object",
+        "properties": {
+          "internetCall": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "customs": {
+      "type": "array",
+      "items": {
+        "title": "custom",
+        "type": "object",
+        "properties": {
+          "custom": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }  }
+}

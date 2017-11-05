@@ -12,7 +12,7 @@
       ]
     },
     {
-      "$ref": "schema-post.json"
+      "$ref": "schemaPost.json"
     }
   ]
 }
