@@ -10,9 +10,9 @@ const express = require('express'),
   base = require('node-base');
 
 var contacts = [
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', age: 50},
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', age: 60},
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', age: 40},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank'},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl'},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim'},
 ]
 
 var basedir = path.join(__dirname, 'config');
