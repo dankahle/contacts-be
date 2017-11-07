@@ -6,6 +6,7 @@ const express = require('express'),
   path = require('path'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
+  usersRouter = require('./api/users/_router'),
   cors = require('cors'),
   base = require('node-base');
 
@@ -43,6 +44,7 @@ confit(basedir).create(function (err, config) {
 // routers
   app.use('/docs', docsRouter);
   app.use('/api/contacts', contactsRouter);
+  app.use('/api/users', usersRouter);
 
 
   app.use(base.middleware.notFound);
