@@ -43,11 +43,11 @@ class UsersBusiness {
 
   add() {
     const user = req.body;
-    user.id = chance.guid();
     const error = Validate.validateObject(req.body, schemaPost);
     if (error) {
       next(error);
     } else {
+      user.id = chance.guid();
       dl.add(req.body)
         .then(response => {
           if (response.insertedCount !== 1) {

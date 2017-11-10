@@ -10,7 +10,6 @@ The backend rest api for the contacts-fe project
 * confit config file environment specific heirarchy
 
 ### todo
-* confit config file for environment dependent configuration (put port in there)
 
 ### get started  
 **seed mongodb database** (assumes a local instance)
@@ -25,4 +24,9 @@ node server.js port (port defaults to 3000)
 ```bash
 http://localhost:port/docs
 ```
+
+### issues
+* json schema api docs won't allow sub schemas in "path" section
+* json schema can't be shared by post/put/results cause can't easily remove id property for post definition
+* json schema put can't restrict additionalProperties (false) in its current "allOf" form
 

@@ -16,7 +16,11 @@
   "basePath": "/v2",
   "tags": [
     {
-      "name": "contact",
+      "name": "contacts",
+      "description": "contact endpoints"
+    },
+    {
+      "name": "users",
       "description": "contact endpoints"
     }
   ],
@@ -27,7 +31,7 @@
     "/contacts": {
       "get": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "get all contacts",
         "description": "return all contacts",
@@ -37,17 +41,15 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "../api/contacts/schema/schema.json"
+                "$ref": "../../api/contacts/schema/schema.json"
               }
             }
           }
         }
-      }
-    },
-    "/contact": {
+      },
       "post": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "add contact",
         "description": "add a new contact",
@@ -58,7 +60,7 @@
             "description": "contact object",
             "required": true,
             "schema": {
-              "$ref": "../api/contacts/schema/schemaPost.json"
+              "$ref": "../../api/contacts/schema/schemaPost.json"
             }
           }
         ],
@@ -66,7 +68,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema.json"
+              "$ref": "../../api/contacts/schema/schema.json"
             }
           },
           "405": {
@@ -78,7 +80,7 @@
     "/contacts/{id}": {
       "get": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "get one contact",
         "description": "return one contact",
@@ -96,7 +98,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema.json"
+              "$ref": "../../api/contacts/schema/schema.json"
             }
           },
           "400": {
@@ -109,7 +111,7 @@
       },
       "put": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "update contact",
         "description": "update a contact",
@@ -136,10 +138,12 @@
                       "format": "guid"
                     }
                   },
-                  "required": ["id"]
+                  "required": [
+                    "id"
+                  ]
                 },
                 {
-                  "$ref": "../api/contacts/schema/schema.json"
+                  "$ref": "../../api/contacts/schema/schema.json"
                 }
               ]
             }
@@ -149,7 +153,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema.json"
+              "$ref": "../../api/contacts/schema/schema.json"
             }
           },
           "400": {
@@ -162,7 +166,7 @@
       },
       "delete": {
         "tags": [
-          "contact"
+          "contacts"
         ],
         "summary": "delete contact",
         "description": "delete a contact",
@@ -179,14 +183,181 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "../api/contacts/schema/schema.json"
+              "$ref": "../../api/contacts/schema/schema.json"
             }
           },
-         "400": {
+          "400": {
             "description": "Invalid id"
           },
           "404": {
             "description": "Contact not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "get all users",
+        "description": "return all users",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../../api/users/schema/schema.json"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "add users",
+        "description": "add a new users",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "users object",
+            "required": true,
+            "schema": {
+              "$ref": "../../api/users/schema/schemaPost.json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../../api/users/schema/schema.json"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "get one users",
+        "description": "return one users",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "users id",
+            "required": true,
+            "type": "string",
+            "format": "guid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../../api/users/schema/schema.json"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "update users",
+        "description": "update a users",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "users id",
+            "required": true,
+            "type": "string",
+            "format": "guid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "users object",
+            "required": true,
+            "schema": {
+              "allOf": [
+                {
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "guid"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                {
+                  "$ref": "../../api/users/schema/schema.json"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../../api/users/schema/schema.json"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "delete users",
+        "description": "delete a users",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "users id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "../../api/users/schema/schema.json"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "User not found"
           }
         }
       }

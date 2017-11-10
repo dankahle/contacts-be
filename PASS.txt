@@ -1,3 +1,6 @@
 
 
-done with simpl data layer and api docs, now need to update to add mongo, then update to complex contact
+nothings working down the json schema line. Can't get additionalProperties to work with the combined schema, can't break the apidocs schemas out...
+screw it, just move on, restapi is up, get onto ngx then.
+
+fix the init code for more realistic data. Bring it in via json maybe, or not.

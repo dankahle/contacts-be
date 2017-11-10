@@ -43,11 +43,11 @@ class ContactsBusiness {
 
   add() {
     const contact = req.body;
-    contact.id = chance.guid();
     const error = Validate.validateObject(req.body, schemaPost);
     if (error) {
       next(error);
     } else {
+      contact.id = chance.guid();
       dl.add(req.body)
         .then(response => {
           if (response.insertedCount !== 1) {

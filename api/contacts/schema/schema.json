@@ -1,7 +1,7 @@
 {
   "allOf": [
     {
-      "additionalProperties": false,
+      "type": "object",
       "properties": {
         "id": {
           "type": "string",
