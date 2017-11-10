@@ -8,13 +8,8 @@ const express = require('express'),
   contactsRouter = require('./api/contacts/_router'),
   usersRouter = require('./api/users/_router'),
   cors = require('cors'),
-  base = require('node-base');
-
-var contacts = [
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank'},
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl'},
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim'},
-]
+  base = require('node-base'),
+  initialize = require('./database/init');
 
 var basedir = path.join(__dirname, 'config');
 confit(basedir).create(function (err, config) {
@@ -55,11 +50,3 @@ confit(basedir).create(function (err, config) {
   });
 
 });
-
-
-
-function initialize(req) {
-  const db = req.db.collection('contacts');
-  return db.deleteMany({})
-    .then(() => db.insertMany(contacts));
-}
