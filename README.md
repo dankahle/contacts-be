@@ -12,17 +12,22 @@ The backend rest api for the contacts-fe project
 ### todo
 
 ### get started  
-**seed mongodb database** (assumes a local instance)
+**initialize mongodb database** (assumes a local instance)
 ```bash
-bash seed-db.sh
+./init-db-contacts.sh
 ```
 **start server**
 ```bash
-node server.js port (port defaults to 3000)
+npm start (port defaults to 3000, set in config file)
 ```
+**run tests**
+```bash
+npm test
+```
+
 **view api docs**
 ```bash
-http://localhost:port/docs
+http://localhost:3000/docs
 ```
 
 ### issues

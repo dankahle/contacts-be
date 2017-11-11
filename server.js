@@ -3,6 +3,7 @@ const express = require('express'),
   expressMongoDb = require('express-mongo-db'),
   confit = require('confit'),
   process = require('process'),
+  exec = require('child_process').exec,
   path = require('path'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
@@ -11,42 +12,35 @@ const express = require('express'),
   base = require('node-base'),
   initialize = require('./database/init');
 
-var basedir = path.join(__dirname, 'config');
-confit(basedir).create(function (err, config) {
-  console.log(`config env: ${config.get('env:env')}`);
+module.exports = new Promise(function(resolve, reject) {
 
-  let init = false;
+  var basedir = path.join(__dirname, 'config');
+  confit(basedir).create(function (err, config) {
+    console.log(`config env: ${config.get('env:env')}`);
 
-  let port = config.get('port');
+    let init = false;
 
-  const app = express();
-  app.use(expressMongoDb('mongodb://localhost/contacts'));
+    let port = config.get('port');
 
-  app.use(function (req, res, next) {
-    console.log(req.method, req.url);
-    if (!init) {
-      init = true;
-      initialize(req)
-        .then(() => next())
-    } else {
-      next();
-    }
-  });
+    const app = express();
+    app.use(expressMongoDb(config.get('database')));
 
-  app.use(cors());
-  app.use(bodyParser.json());
+    app.use(cors());
+    app.use(bodyParser.json());
 
 // routers
-  app.use('/docs', docsRouter);
-  app.use('/api/contacts', contactsRouter);
-  app.use('/api/users', usersRouter);
+    app.use('/docs', docsRouter);
+    app.use('/api/contacts', contactsRouter);
+    app.use('/api/users', usersRouter);
 
+    app.use(base.middleware.notFound);
+    app.use(base.middleware.errorHandler);
 
-  app.use(base.middleware.notFound);
-  app.use(base.middleware.errorHandler);
+    app.listen(port, function () {
+      console.log(`listening on ${port}`);
+      resolve(app);
+    });
 
-  app.listen(port, function () {
-    console.log(`listening on ${port}`);
   });
-
 });
+

@@ -1,3 +1,4 @@
 {
-  "port": 443
+  "port": "will be overridden",
+  "database": "mongodb://localhost/contacts"
 }

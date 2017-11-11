@@ -1,6 +1,14 @@
 
 
-nothings working down the json schema line. Can't get additionalProperties to work with the combined schema, can't break the apidocs schemas out...
-screw it, just move on, restapi is up, get onto ngx then.
 
-fix the init code for more realistic data. Bring it in via json maybe, or not.
+test 404 for /api/contacts and users
+
+
+test 404 in general for no endpoint, is this done in nodebase?? or here? here I assume, needs to be tested for every site I figure
+
+test error handler // node-base or here?? here I assume
+
+
+
+
+

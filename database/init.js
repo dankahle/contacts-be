@@ -22,3 +22,5 @@ function initialize(req) {
     collUsers.deleteMany({})
       .then(() => collUsers.insertMany(contacts))  ]);
 }
+
+
