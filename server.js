@@ -10,6 +10,7 @@ const express = require('express'),
   usersRouter = require('./api/users/_router'),
   cors = require('cors'),
   base = require('node-base'),
+  baseConfig = new base.Config(),
   initialize = require('./database/init');
 
 module.exports = new Promise(function(resolve, reject) {
@@ -17,6 +18,8 @@ module.exports = new Promise(function(resolve, reject) {
   var basedir = path.join(__dirname, 'config');
   confit(basedir).create(function (err, config) {
     console.log(`config env: ${config.get('env:env')}`);
+    // set the nodebase projects config values from config nodeBase property
+    baseConfig.setConfig(config.get('nodeBase'));
 
     let init = false;
 
@@ -29,6 +32,9 @@ module.exports = new Promise(function(resolve, reject) {
     app.use(bodyParser.json());
 
 // routers
+    app.get('/cause-error', function() {
+      throw new Error('cause-error');
+    })
     app.use('/docs', docsRouter);
     app.use('/api/contacts', contactsRouter);
     app.use('/api/users', usersRouter);

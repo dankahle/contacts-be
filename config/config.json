@@ -1,4 +1,6 @@
 {
   "port": "will be overridden",
-  "database": "mongodb://localhost/contacts"
+  "database": "mongodb://localhost/contacts",
+  "nodeBase": {
+  }
 }

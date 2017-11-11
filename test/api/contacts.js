@@ -31,7 +31,7 @@ describe('/contacts', function() {
   const id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9';
 
 
-  it('shows enpoint not found', function(done) {
+  it('shows endpoint not found', function(done) {
     request(app)
       .get('/notthere')
       .expect(404, { message: 'Endpoint not found.' }, done);
