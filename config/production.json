@@ -1,4 +1,5 @@
 {
+  "ssl": true,
   "port": 8000,
-  "database": "mongodb://mlabconnstring/contacts"
+  "database": "mongodb://localhost/contacts"
 }
