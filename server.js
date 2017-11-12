@@ -2,6 +2,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   expressMongoDb = require('express-mongo-db'),
   confit = require('confit'),
+  morgan = require('morgan'),
   process = require('process'),
   exec = require('child_process').exec,
   path = require('path'),
@@ -41,10 +42,7 @@ module.exports = new Promise(function(resolve, reject) {
     app.use(bodyParser.json());
 
 // routers
-    app.use(function(req, res, next) {
-      console.log(req.url);
-      next();
-    });
+    app.use(morgan('dev'));
 
     app.get('/cause-error', function (req, res) {
       throw new Error('cause-error message');
@@ -58,7 +56,7 @@ module.exports = new Promise(function(resolve, reject) {
     app.use(base.middleware.errorHandler);
 
     let server = null;
-    if (config.get('ssl')) {
+    if (config.get('ssl') === true) {
       const options = {
         key: fs.readFileSync(path.join(__dirname, 'keys/key.pem')),
         cert: fs.readFileSync(path.join(__dirname, 'keys/server.crt'))
