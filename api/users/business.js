@@ -4,7 +4,8 @@ const chance = new require('chance')(),
   UsersData = require('./data'),
   base = require('node-base'),
   Validate = base.Validate,
-  BasicError = base.errors.BasicError;
+  BasicError = base.errors.BasicError,
+  codePrefix = '100-';
 
 let req = null, res = null, next = null, dl = null;
 
@@ -26,14 +27,14 @@ class UsersBusiness {
   getOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
-      next(new BasicError('Invalid id parameter', 400));
+      next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
       return;
     }
 
     dl.getOne(id)
       .then(user => {
         if (!user) {
-          next(new BasicError('User not found', 404));
+          next(new BasicError('User not found', codePrefix + '0101', 404));
         } else {
           res.send(user);
         }
@@ -51,7 +52,7 @@ class UsersBusiness {
       dl.add(req.body)
         .then(response => {
           if (response.insertedCount !== 1) {
-            next(new BasicError('Failed to add user', 404));
+            next(new BasicError('Failed to add user', codePrefix + '0102', 404));
             return;
           } else {
             delete user._id;
@@ -65,7 +66,7 @@ class UsersBusiness {
   put() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
-      next(new BasicError('Invalid id parameter', 400));
+      next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
       return;
     }
 
@@ -77,7 +78,7 @@ class UsersBusiness {
       dl.update(id, user)
         .then(response => {
           if (response.matchedCount !== 1) {
-            next(new BasicError('User not found', 404));
+            next(new BasicError('User not found', codePrefix + '0101', 404));
             return;
           } else {
             res.send(user);
@@ -90,14 +91,14 @@ class UsersBusiness {
   remove() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
-      next(new BasicError('Invalid id parameter', 400));
+      next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
       return;
     }
 
     dl.remove(id)
       .then(response => {
         if (response.deletedCount !== 1) {
-          next(new BasicError('User not found', 404));
+          next(new BasicError('User not found', codePrefix + '0101', 404));
           return;
         } else {
           res.send({});

@@ -3,9 +3,9 @@ conn = new Mongo();
 db = conn.getDB('contacts');
 db.dropDatabase()
 db.createCollection('contacts');
-db.contacts.createIndex({id:1});
+db.contacts.createIndex({id:1}, {unique: true});
 db.contacts.createIndex({name:1});
-db.users.createIndex({id:1});
+db.users.createIndex({id:1}, {unique: true});
 db.users.createIndex({name:1});
 
 

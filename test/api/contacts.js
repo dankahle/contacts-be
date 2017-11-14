@@ -63,13 +63,21 @@ describe('/contacts', function() {
   it('get one 400 bad request', function(done) {
     request(app)
       .get(`/api/contacts/not-a-guid`)
-      .expect(400, { message: 'Invalid id parameter' }, done);
+      .expect(400)
+      .expect(function(res) {
+        expect(res.body.errorCode).to.equal('200-0100')
+      })
+      .end(done);
   });
 
   it('get one 404 not found', function(done) {
     request(app)
       .get(`/api/contacts/${id404}`)
-      .expect(404, { message: 'Contact not found' }, done);
+      .expect(404)
+      .expect(function(res) {
+        expect(res.body.errorCode).to.equal('200-0101')
+      })
+      .end(done);
   });
 
   it('post', function(done) {

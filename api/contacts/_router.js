@@ -14,7 +14,8 @@ router.use(function (req, res, next) {
 })
 
 router.get('/', function (req, res) {
-  bl.getAll()
+  // bl.getAll()
+  setTimeout(bl.getAll, 1000);
 })
 
 router.get('/:id', function (req, res, next) {

@@ -56,7 +56,7 @@ module.exports = new Promise(function(resolve, reject) {
     app.use(base.middleware.errorHandler);
 
     let server = null;
-    if (config.get('ssl') === true) {
+    if (config.get('ssl')) {
       const options = {
         key: fs.readFileSync(path.join(__dirname, 'keys/key.pem')),
         cert: fs.readFileSync(path.join(__dirname, 'keys/server.crt'))
