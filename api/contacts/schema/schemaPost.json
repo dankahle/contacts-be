@@ -3,6 +3,17 @@
   "type": "object",
   "required": ["name"],
   "properties": {
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "guid"
+      }
+    },
+    "id": {
+      "type": "string",
+      "format": "guid"
+    },
     "name": {
       "type": "string"
     },

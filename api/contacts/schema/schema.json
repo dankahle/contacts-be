@@ -3,10 +3,6 @@
     {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "guid"
-        }
       },
       "required": [
         "id", "name"

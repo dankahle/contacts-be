@@ -11,26 +11,32 @@ class ContactsData {
     db = req.db.collection('contacts');
   }
 
-  getAll() {
-    return db.find({}, {_id:0})
+  ///////////////////// "/"
+  getMany(query) {
+    return db.find(query)
       .sort({name:1})
       // .project({_id:0})
       .toArray();
   }
 
+  addOne(contact) {
+    return db.insertOne(contact);
+  }
+
+  deleteMany(query) {
+    return db.removeMany(query);
+  }
+
+  ///////////////////// "/:id"
   getOne(id){
     return db.findOne({id: id}, {_id:0});
   }
 
-  add(contact) {
-    return db.insertOne(contact);
-  }
-
-  update(id, contact) {
+  updateOne(id, contact) {
     return db.updateOne({id: id}, contact);
   }
 
-  remove(id) {
+  deleteOne(id) {
     return db.removeOne({id: id});
   }
 
@@ -38,12 +44,4 @@ class ContactsData {
 
 module.exports = ContactsData;
 
-
-function getNextUserId() {
-  return _.max(_.map(contacts, 'id')) + 1;
-}
-
-function getOneUser(id) {
-  return _.find(contacts, {id: Number(id)});
-}
 

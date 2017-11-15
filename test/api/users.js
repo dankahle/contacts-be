@@ -22,36 +22,43 @@ describe('/users', function() {
     done();
   })
 
+  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
+    id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
+    labelId = 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1';
+
   var users = [
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank'},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl'},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim'},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels:[labelId]},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels:[]},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels:[labelId]},
   ];
-  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1';
-  const id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9';
+
+  const mary = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'mary', labels:[labelId]};
 
 
   it('shows enpoint not found', function(done) {
     request(app)
       .get('/notthere')
-      .expect(404, { message: 'Endpoint not found.' }, done);
+      .expect(404, {
+        errorCode: '000-0105',
+        message: 'Endpoint not found.'
+      }, done);
   });
 
-  it('get all', function(done) {
+  it('get many', function(done) {
     request(app)
       .get('/api/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
         expect(_.map(arr, 'name')).to.be.eql(['carl', 'dank', 'jim']); // should sort
         arr.forEach(user => {
           expect(Validate.validateObject(user, userSchema)).to.be.undefined;
         })
-        done();
       })
+      .end(done)
   });
 
   it('get one', function(done) {
@@ -84,50 +91,50 @@ describe('/users', function() {
     request(app)
       .post(`/api/users`)
       .send({name: 'mary'})
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         expect(res.body.name).to.be.equal('mary');
         expect(res.body.id).to.exist;
         expect(Validate.validateGuid(res.body.id)).to.be.true;
-        done();
       })
+      .end(done)
   });
 
   it('get all after post', function(done) {
     request(app)
       .get('/api/users')
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
         expect(arr[3].name).to.equal('mary');
-        done();
       })
+      .end(done)
   });
 
   it('PUT /api/users/:id', function(done) {
     request(app)
       .put(`/api/users/${dankId}`)
       .send({id: dankId, name: 'dank2'})
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
         expect(res.body.id).to.equal(dankId);
         expect(Validate.validateObject(res.body, userSchema)).to.be.undefined;
-        done();
       })
+      .end(done)
   });
 
   it('get one after put', function(done) {
     request(app)
       .get(`/api/users/${dankId}`)
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
         expect(res.body.id).to.equal(dankId);
         expect(Validate.validateObject(res.body, userSchema)).to.be.undefined;
-        done();
       })
+      .end(done)
   });
 
   it('delete', function(done) {
@@ -139,13 +146,13 @@ describe('/users', function() {
   it('get all after delete', function(done) {
     request(app)
       .get('/api/users')
-      .expect(200, function(err, res) {
-        if (err) done(err);
+      .expect(200)
+      .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
         expect(_.find(arr, {id: dankId})).to.be.undefined;
-        done();
       })
+      .end(done)
   });
 
 

@@ -14,22 +14,26 @@ router.use(function (req, res, next) {
 })
 
 router.get('/', function (req, res) {
-  // bl.getAll()
-  setTimeout(bl.getAll, 1000);
+  bl.getMany()
 })
+
+router.post('/', function (req, res, next) {
+  bl.addOne()
+})
+
+router.delete('/', function (req, res) {
+  bl.deleteMany();
+})
+
 
 router.get('/:id', function (req, res, next) {
   bl.getOne();
 })
 
-router.post('/', function (req, res, next) {
-  bl.add()
-})
-
 router.put('/:id', function (req, res) {
-  bl.put()
+  bl.putOne()
 })
 
 router.delete('/:id', function (req, res) {
-  bl.remove();
+  bl.deleteOne();
 })

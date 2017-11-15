@@ -18,12 +18,36 @@ class UsersBusiness {
     dl = new UsersData(req, res, next);
   }
 
-  getAll() {
-    dl.getAll()
+  ///////////////////// "/"
+  getMany() {
+    const query = {};
+    dl.getMany(query)
       .then(users => res.send(users))
       .catch(e => next(e));
   }
 
+  addOne() {
+    const user = req.body;
+    const error = Validate.validateObject(req.body, schemaPost);
+    if (error) {
+      next(error);
+    } else {
+      user.id = user.id || chance.guid(); // allow the UI to set an id to keep track of things
+      dl.addOne(req.body)
+        .then(response => {
+          if (response.insertedCount !== 1) {
+            next(new BasicError('Failed to add user', codePrefix + '0102', 404));
+            return;
+          } else {
+            delete user._id;
+            res.send(user);
+          }
+        })
+        .catch(e => next(e));
+    }
+  }
+
+  ///////////////////// "/:id"
   getOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
@@ -42,28 +66,7 @@ class UsersBusiness {
       .catch(e => next(e));
   }
 
-  add() {
-    const user = req.body;
-    const error = Validate.validateObject(req.body, schemaPost);
-    if (error) {
-      next(error);
-    } else {
-      user.id = chance.guid();
-      dl.add(req.body)
-        .then(response => {
-          if (response.insertedCount !== 1) {
-            next(new BasicError('Failed to add user', codePrefix + '0102', 404));
-            return;
-          } else {
-            delete user._id;
-            res.send(user);
-          }
-        })
-        .catch(e => next(e));
-    }
-  }
-
-  put() {
+  putOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
       next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
@@ -75,7 +78,7 @@ class UsersBusiness {
     if (error) {
       next(error);
     } else {
-      dl.update(id, user)
+      dl.updateOne(id, user)
         .then(response => {
           if (response.matchedCount !== 1) {
             next(new BasicError('User not found', codePrefix + '0101', 404));
@@ -88,26 +91,25 @@ class UsersBusiness {
     }
   }
 
-  remove() {
+  deleteOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
       next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
       return;
     }
 
-    dl.remove(id)
+    dl.deleteOne(id)
       .then(response => {
         if (response.deletedCount !== 1) {
           next(new BasicError('User not found', codePrefix + '0101', 404));
           return;
         } else {
-          res.send({});
+          res.send({deletedCount: response.deletedCount});
         }
       })
       .catch(e => next(e));
   }
 
 }
-
 
 module.exports = UsersBusiness;

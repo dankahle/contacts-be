@@ -18,12 +18,48 @@ class ContactsBusiness {
     dl = new ContactsData(req, res, next);
   }
 
-  getAll() {
-    dl.getAll()
+  ///////////////////// "/"
+  getMany() {
+    const query = req.query.label ? {labels: {$in: [req.query.label]}} : {};
+    dl.getMany(query)
       .then(contacts => res.send(contacts))
       .catch(e => next(e));
   }
 
+  addOne() {
+    const contact = req.body;
+    const error = Validate.validateObject(req.body, schemaPost);
+    if (error) {
+      next(error);
+    } else {
+      contact.id = contact.id || chance.guid(); // allow the UI to set an id to keep track of things
+      dl.addOne(req.body)
+        .then(response => {
+          if (response.insertedCount !== 1) {
+            next(new BasicError('Failed to add contact', codePrefix + '0102', 404));
+            return;
+          } else {
+            delete contact._id;
+            res.send(contact);
+          }
+        })
+        .catch(e => next(e));
+    }
+  }
+
+  deleteMany() {
+    if (!req.query.label) {
+      next(new BasicError('No label supplied', codePrefix + '0107', 400))
+    }
+    const query = {labels: {$in: [req.query.label]}};
+    dl.deleteMany(query)
+      .then(response => {
+        res.send({deletedCount: response.deletedCount})
+      })
+      .catch(e => next(e));
+  }
+
+  ///////////////////// "/"
   getOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
@@ -42,28 +78,7 @@ class ContactsBusiness {
       .catch(e => next(e));
   }
 
-  add() {
-    const contact = req.body;
-    const error = Validate.validateObject(req.body, schemaPost);
-    if (error) {
-      next(error);
-    } else {
-      contact.id = chance.guid();
-      dl.add(req.body)
-        .then(response => {
-          if (response.insertedCount !== 1) {
-            next(new BasicError('Failed to add contact', codePrefix + '0102', 404));
-            return;
-          } else {
-            delete contact._id;
-            res.send(contact);
-          }
-        })
-        .catch(e => next(e));
-    }
-  }
-
-  put() {
+  putOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
       next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
@@ -75,7 +90,7 @@ class ContactsBusiness {
     if (error) {
       next(error);
     } else {
-      dl.update(id, contact)
+      dl.updateOne(id, contact)
         .then(response => {
           if (response.matchedCount !== 1) {
             next(new BasicError('Contact not found', codePrefix + '0101', 404));
@@ -88,20 +103,20 @@ class ContactsBusiness {
     }
   }
 
-  remove() {
+  deleteOne() {
     const id = req.params.id;
     if (!Validate.validateGuid(id)) {
       next(new BasicError('Invalid id parameter', codePrefix + '0100', 400));
       return;
     }
 
-    dl.remove(id)
+    dl.deleteOne(id)
       .then(response => {
         if (response.deletedCount !== 1) {
           next(new BasicError('Contact not found', codePrefix + '0101', 404));
           return;
         } else {
-          res.send({});
+          res.send({deletedCount: response.deletedCount});
         }
       })
       .catch(e => next(e));
@@ -109,5 +124,5 @@ class ContactsBusiness {
 
 }
 
-
 module.exports = ContactsBusiness;
+

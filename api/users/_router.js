@@ -14,21 +14,21 @@ router.use(function (req, res, next) {
 })
 
 router.get('/', function (req, res) {
-  bl.getAll()
+  bl.getMany()
+})
+
+router.post('/', function (req, res, next) {
+  bl.addOne()
 })
 
 router.get('/:id', function (req, res, next) {
   bl.getOne();
 })
 
-router.post('/', function (req, res, next) {
-  bl.add()
-})
-
 router.put('/:id', function (req, res) {
-  bl.put()
+  bl.putOne()
 })
 
 router.delete('/:id', function (req, res) {
-  bl.remove();
+  bl.deleteOne();
 })
