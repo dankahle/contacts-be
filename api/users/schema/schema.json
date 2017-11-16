@@ -1,15 +1,10 @@
 {
   "allOf": [
     {
+      "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "guid"
-        }
       },
-      "required": [
-        "id"
-      ]
+      "required": ["_id", "name"]
     },
     {
       "$ref": "schemaPost.json"

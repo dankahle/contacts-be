@@ -16,6 +16,7 @@
     "body-parser": "^1.17.2",
     "chance": "^1.0.12",
     "confit": "^2.2.1",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-mongo-db": "^2.0.3",

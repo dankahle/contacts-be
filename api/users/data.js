@@ -1,4 +1,4 @@
-var _ = require('lodash');
+const chance = new require('chance')();
 
 let req = null, res = null, next = null, db = null;
 
@@ -13,27 +13,29 @@ class UsersData {
 
   ////////////// "/"
   getMany(query) {
-    return db.find(query, {_id:0})
+    return db.find(query)
       .sort({name:1})
-      // .project({_id:0})
       .toArray();
   }
 
   addOne(user) {
+    user._id = user._id || chance.guid(); // allow the UI to set an id to keep track of things
+    user.labels = user.labels || [];
     return db.insertOne(user);
   }
 
   ////////////// "/:id"
   getOne(id){
-    return db.findOne({id: id}, {_id:0});
+    return db.findOne({_id: id});
   }
 
   updateOne(id, user) {
-    return db.updateOne({id: id}, user);
+    user.labels = user.labels || [];
+    return db.updateOne({_id: id}, user);
   }
 
   deleteOne(id) {
-    return db.removeOne({id: id});
+    return db.removeOne({_id: id});
   }
 
 }

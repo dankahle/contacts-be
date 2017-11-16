@@ -3,13 +3,28 @@
   "type": "object",
   "required": ["name"],
   "properties": {
+    "_id": {
+      "type": "string",
+      "format": "guid"
+    },
     "name": {
       "type": "string"
     },
     "labels": {
       "type": "array",
       "items": {
-        "type": "string"
+        "title": "label",
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
       }
     }
   }

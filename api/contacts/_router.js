@@ -25,7 +25,6 @@ router.delete('/', function (req, res) {
   bl.deleteMany();
 })
 
-
 router.get('/:id', function (req, res, next) {
   bl.getOne();
 })

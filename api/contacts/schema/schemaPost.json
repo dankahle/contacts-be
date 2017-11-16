@@ -6,11 +6,21 @@
     "labels": {
       "type": "array",
       "items": {
-        "type": "string",
-        "format": "guid"
+        "title": "label",
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
       }
     },
-    "id": {
+    "_id": {
       "type": "string",
       "format": "guid"
     },

@@ -1,17 +1,17 @@
-/*
-var app = require('express')();
 
-var listener = app.listen(0, function(){
-  console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-});
-*/
 
 
 var MongoClient = require('mongodb').MongoClient,
   ObjectId = require('mongodb').ObjectId,
   expect = require('chai').expect,
-  _ = require('lodash');
+  _ = require('lodash'),
+  chance = new require('chance')();
 
+const cid = chance.guid(),
+  oid = new ObjectId();
+
+console.log(cid, oid.toString(), oid.toHexString());
+// const idoc = {_id: ObjectId(cid), a:1};
 const idoc = {a:1};
 MongoClient.connect('mongodb://localhost:27017/test')
   .then(db => {
@@ -24,15 +24,16 @@ MongoClient.connect('mongodb://localhost:27017/test')
             const idocsid = idoc._id.toString();
             idoc._id = idocsid;
             idoc.a = 12;
+            idoc._id = ObjectId(idoc._id);
             coll.updateOne({_id: idoc._id}, idoc)
               .then(resput => {
                 console.log('modifiedCount', resput.modifiedCount);
-                console.log('afterput', idoc);
+                console.log('afterput obj modified?', idoc);
 
                 coll.find({})
                   .toArray()
                   .then(docs => {
-                    console.log('find', docs);
+                    console.log('find after put', docs);
                     db.close();
                   });
 

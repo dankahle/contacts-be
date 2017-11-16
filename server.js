@@ -9,6 +9,7 @@ const express = require('express'),
   https = require('https'),
   http = require('http'),
   fs = require('fs'),
+  cookieParser = require('cookie-parser'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
   usersRouter = require('./api/users/_router'),
@@ -37,12 +38,27 @@ module.exports = new Promise(function(resolve, reject) {
 
     const app = express();
     app.use(expressMongoDb(config.get('database')));
+    app.use(function(req, res, next) {
+      console.log(req.method, req.url);
+      next();
+    });
 
     app.use(cors());
     app.use(bodyParser.json());
+    app.use(cookieParser());
 
 // routers
     app.use(morgan('dev'));
+
+    app.use(function(req, res, next) {
+      if (!req.cookies.dkContacts) {
+        res.cookie('dkcontacts', 'lala');
+      } else {
+        console.log('cookie', res.cookie.dkContacts);
+      }
+      next();
+    })
+
 
     app.get('/cause-error', function (req, res) {
       throw new Error('cause-error message');

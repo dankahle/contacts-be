@@ -5,7 +5,7 @@ const request = require('supertest'),
   server = require('../../server'),
   nodebase = require('file://../node-base'),
   Validate = require('file://../node-base').Validate,
-  userSchema = require('../../api/users/schema/schema.json');
+  schema = require('../../api/users/schema/schema.json');
 
 let app = null;
 
@@ -24,15 +24,16 @@ describe('/users', function() {
 
   const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
-    labelId = 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1';
+    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', label: 'label one'};
 
-  var users = [
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels:[labelId]},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels:[]},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels:[labelId]},
+  const users = [
+    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels: [labelOne]},
+    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
+    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
   ];
 
-  const mary = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'mary', labels:[labelId]};
+  const mary = {name: 'mary'};
+  const kate = {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
 
 
   it('shows enpoint not found', function(done) {
@@ -55,7 +56,7 @@ describe('/users', function() {
         expect(arr.length).to.be.equal(3);
         expect(_.map(arr, 'name')).to.be.eql(['carl', 'dank', 'jim']); // should sort
         arr.forEach(user => {
-          expect(Validate.validateObject(user, userSchema)).to.be.undefined;
+          expect(Validate.validateObject(user, schema)).to.be.undefined;
         })
       })
       .end(done)
@@ -65,16 +66,6 @@ describe('/users', function() {
     request(app)
       .get(`/api/users/${dankId}`)
       .expect(200, users[0], done);
-  });
-
-  it('get one 400 bad request', function(done) {
-    request(app)
-      .get(`/api/users/not-a-guid`)
-      .expect(400)
-      .expect(function(res) {
-        expect(res.body.errorCode).to.equal('100-0100')
-      })
-      .end(done);
   });
 
   it('get one 404 not found', function(done) {
@@ -87,15 +78,16 @@ describe('/users', function() {
       .end(done);
   });
 
-  it('post', function(done) {
+  it('post with no _id or labels', function(done) {
     request(app)
       .post(`/api/users`)
-      .send({name: 'mary'})
+      .send(mary)
       .expect(200)
       .expect(function(res) {
-        expect(res.body.name).to.be.equal('mary');
-        expect(res.body.id).to.exist;
-        expect(Validate.validateGuid(res.body.id)).to.be.true;
+        const contact = res.body
+        expect(contact.name).to.equal(mary.name);
+        expect(Validate.validateGuid(contact._id)).to.be.true;
+        expect(Validate.validateObject(contact, schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -107,7 +99,33 @@ describe('/users', function() {
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(arr[3].name).to.equal('mary');
+        expect(arr[3].name).to.equal(mary.name);
+        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
+      })
+      .end(done)
+  });
+
+  it('post with _id and labels', function(done) {
+    request(app)
+      .post(`/api/users`)
+      .send(kate)
+      .expect(200)
+      .expect(function(res) {
+        expect(res.body).to.eql(_.assign({labels: []}, kate));
+        expect(Validate.validateObject(res.body, schema)).to.be.undefined;
+      })
+      .end(done)
+  });
+
+  it('get all after post', function(done) {
+    request(app)
+      .get('/api/users')
+      .expect(200)
+      .expect(function(res) {
+        const arr = res.body
+        expect(arr.length).to.equal(5);
+        expect(arr[3].name).to.equal(kate.name);
+        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -115,12 +133,12 @@ describe('/users', function() {
   it('PUT /api/users/:id', function(done) {
     request(app)
       .put(`/api/users/${dankId}`)
-      .send({id: dankId, name: 'dank2'})
+      .send({_id: dankId, name: 'dank2'})
       .expect(200)
       .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
-        expect(res.body.id).to.equal(dankId);
-        expect(Validate.validateObject(res.body, userSchema)).to.be.undefined;
+        expect(res.body._id).to.equal(dankId);
+        expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -131,8 +149,8 @@ describe('/users', function() {
       .expect(200)
       .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
-        expect(res.body.id).to.equal(dankId);
-        expect(Validate.validateObject(res.body, userSchema)).to.be.undefined;
+        expect(res.body._id).to.equal(dankId);
+        expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -149,15 +167,12 @@ describe('/users', function() {
       .expect(200)
       .expect(function(res) {
         const arr = res.body
-        expect(arr.length).to.be.equal(3);
+        expect(arr.length).to.be.equal(4);
         expect(_.find(arr, {id: dankId})).to.be.undefined;
+        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'kate', 'mary']);
       })
       .end(done)
   });
-
-
-
-
 
 })
 
