@@ -1,5 +1,8 @@
 {
   "ssl": true,
   "port": 8000,
-  "database": "mongodb://localhost/contacts"
+  "corsDomain": "http://heroku/something",
+  "database": "mongodb://????",
+  "nodeBase": {
+  }
 }

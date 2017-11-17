@@ -38,27 +38,25 @@ module.exports = new Promise(function(resolve, reject) {
 
     const app = express();
     app.use(expressMongoDb(config.get('database')));
-    app.use(function(req, res, next) {
-      console.log(req.method, req.url);
-      next();
-    });
 
-    app.use(cors());
+    var corsOptions = {
+      origin: config.get('corsDomain'),
+      credentials: true
+    }
+    app.use(cors(corsOptions));
     app.use(bodyParser.json());
     app.use(cookieParser());
-
-// routers
     app.use(morgan('dev'));
 
-    app.use(function(req, res, next) {
-      if (!req.cookies.dkContacts) {
-        res.cookie('dkcontacts', 'lala');
+    app.use(function (req, res, next) {
+      if (req.cookies && !req.cookies.dkContacts) {
+        res.cookie('dkContacts', {id: 'xxx', name: 'dank'});
+        console.log('setcookie');
       } else {
-        console.log('cookie', res.cookie.dkContacts);
+        console.log('foundcookie', req.cookies.dkContacts.id);
       }
       next();
-    })
-
+    });
 
     app.get('/cause-error', function (req, res) {
       throw new Error('cause-error message');

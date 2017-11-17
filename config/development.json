@@ -1,5 +1,8 @@
 {
+  "ssl": false,
   "port": 3000,
+  "corsDomain": "http://localhost:4200",
+  "database": "mongodb://localhost/contacts",
   "nodeBase": {
     "showStackWithErrors": true
   }

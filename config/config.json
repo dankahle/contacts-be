@@ -1,7 +1,4 @@
 {
-  "ssl": false,
-  "port": "will be overridden",
-  "database": "mongodb://localhost/contacts",
   "nodeBase": {
   }
 }
