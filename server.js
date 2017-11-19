@@ -15,8 +15,13 @@ const express = require('express'),
   usersRouter = require('./api/users/_router'),
   cors = require('cors'),
   base = require('node-base'),
+  loginRouter = base.middleware.loginRouter,
+  registerRouter = base.middleware.registerRouter,
+  authenticate = base.middleware.authenticate,
   baseConfig = new base.Config(),
-  initialize = require('./database/init');
+  errorCodes = base.errors.errorCodes,
+  initialize = require('./database/init'),
+  errorPrefix = '000-';
 
 process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
@@ -24,7 +29,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 
-module.exports = new Promise(function(resolve, reject) {
+module.exports = new Promise(function (resolve, reject) {
 
   var basedir = path.join(__dirname, 'config');
   confit(basedir).create(function (err, config) {
@@ -48,21 +53,14 @@ module.exports = new Promise(function(resolve, reject) {
     app.use(cookieParser());
     app.use(morgan('dev'));
 
-    app.use(function (req, res, next) {
-      if (req.cookies && !req.cookies.dkContacts) {
-        res.cookie('dkContacts', {id: 'xxx', name: 'dank'});
-        console.log('setcookie');
-      } else {
-        console.log('foundcookie', req.cookies.dkContacts.id);
-      }
-      next();
-    });
-
     app.get('/cause-error', function (req, res) {
       throw new Error('cause-error message');
     })
 
     app.use('/docs', docsRouter);
+    app.use('/api/login', loginRouter);
+    app.use('/api/register', registerRouter);
+    app.use(authenticate);
     app.use('/api/contacts', contactsRouter);
     app.use('/api/users', usersRouter);
 
@@ -80,18 +78,18 @@ module.exports = new Promise(function(resolve, reject) {
           if (err) {
             reject(err);
           }
-        console.log(`https server listening on ${port}`);
-        resolve(server);
-      })
+          console.log(`https server listening on ${port}`);
+          resolve(server);
+        })
     } else {
       server = http.createServer(app)
         .listen(port, function (err) {
           if (err) {
             reject(err);
           }
-        console.log(`http server listening on ${port}`);
-        resolve(server);
-      });
+          console.log(`http server listening on ${port}`);
+          resolve(server);
+        });
     }
   });
 });

@@ -16,13 +16,26 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(function (req, res, next) {
-  if (!req.cookies.dkContacts) {
+  if (!req.cookies.dkAuth) {
     res.cookie('dkcontacts', 'lala');
   } else {
-    console.log('cookie', res.cookie.dkContacts);
+    console.log('cookie', res.cookie.dkAuth);
   }
   next();
 });
+
+/*
+    app.use(function (req, res, next) {
+      if (req.cookies && !req.cookies.dkAuth) {
+        res.cookie('dkAuth', {id: 'xxx', name: 'dank'});
+        console.log('setcookie');
+      } else {
+        console.log('foundcookie', req.cookies.dkAuth.id);
+      }
+      next();
+    });
+*/
+
 
 app.use(express.static('public'))
 

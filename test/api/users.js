@@ -3,7 +3,8 @@ const request = require('supertest'),
   expect = require('chai').expect,
   _ = require('lodash'),
   server = require('../../server'),
-  nodebase = require('file://../node-base'),
+  base = require('node-base'),
+  errorCodes = base.errors.errorCodes,
   Validate = require('file://../node-base').Validate,
   schema = require('../../api/users/schema/schema.json');
 
@@ -39,10 +40,12 @@ describe('/users', function() {
   it('shows enpoint not found', function(done) {
     request(app)
       .get('/notthere')
-      .expect(404, {
-        errorCode: '000-0105',
-        message: 'Endpoint not found.'
-      }, done);
+      .expect(404)
+      .expect(function(res) {
+        expect(res.body.errorCode).to.equal(errorCodes.server_prefix + errorCodes.server_endpoint_not_found);
+        expect(res.body.message).to.equal('Endpoint not found.')
+      })
+      .end(done);
   });
 
   it('get many', function(done) {
@@ -73,7 +76,7 @@ describe('/users', function() {
       .get(`/api/users/${id404}`)
       .expect(404)
       .expect(function(res) {
-        expect(res.body.errorCode).to.equal('100-0101')
+        expect(res.body.errorCode).to.equal('100-' + errorCodes.resource_not_found)
       })
       .end(done);
   });

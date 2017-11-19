@@ -1,4 +1,7 @@
 {
   "port": 3001,
-  "database": "mongodb://localhost/unit"
+  "database": "mongodb://localhost/unit",
+  "nodeBase": {
+    "showStackWithErrors": true
+  }
 }

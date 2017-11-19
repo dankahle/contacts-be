@@ -4,7 +4,8 @@ const schema = require('./schema/schema.json'),
   base = require('node-base'),
   Validate = base.Validate,
   BasicError = base.errors.BasicError,
-  codePrefix = '200-';
+  errorCodes = base.errors.errorCodes,
+  errorPrefix = '200-';
 
 let req = null, res = null, next = null, dl = null;
 
@@ -34,7 +35,7 @@ class ContactsBusiness {
       dl.addOne(req.body)
         .then(response => {
           if (response.insertedCount !== 1) {
-            next(new BasicError('Failed to add contact', codePrefix + '0102', 404));
+            next(new BasicError('Failed to add contact', errorPrefix + errorCodes.resource_not_added, 404));
             return;
           } else {
             res.send(contact);
@@ -46,7 +47,7 @@ class ContactsBusiness {
 
   deleteMany() {
     if (!req.query.label) {
-      next(new BasicError('No label supplied', codePrefix + '0107', 400))
+      next(new BasicError('No label supplied', errorPrefix + errorCodes.invalid_parameters, 400))
     }
     const query = {labels: {$elemMatch: {id: req.query.label}}};
     dl.deleteMany(query)
@@ -61,7 +62,7 @@ class ContactsBusiness {
     dl.getOne(req.params.id)
       .then(contact => {
         if (!contact) {
-          next(new BasicError('Contact not found', codePrefix + '0101', 404));
+          next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
         } else {
           res.send(contact);
         }
@@ -78,7 +79,7 @@ class ContactsBusiness {
       dl.updateOne(req.params.id, contact)
         .then(response => {
           if (response.matchedCount !== 1) {
-            next(new BasicError('Contact not found', codePrefix + '0101', 404));
+            next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
             return;
           } else {
             res.send(contact);
@@ -92,7 +93,7 @@ class ContactsBusiness {
     dl.deleteOne(req.params.id)
       .then(response => {
         if (response.deletedCount !== 1) {
-          next(new BasicError('Contact not found', codePrefix + '0101', 404));
+          next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
           return;
         } else {
           res.send({deletedCount: response.deletedCount});

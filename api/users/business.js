@@ -5,7 +5,8 @@ const chance = new require('chance')(),
   base = require('node-base'),
   Validate = base.Validate,
   BasicError = base.errors.BasicError,
-  codePrefix = '100-';
+  errorCodes = base.errors.errorCodes,
+  errorPrefix = '100-';
 
 let req = null, res = null, next = null, dl = null;
 
@@ -35,7 +36,7 @@ class UsersBusiness {
       dl.addOne(req.body)
         .then(response => {
           if (response.insertedCount !== 1) {
-            next(new BasicError('Failed to add user', codePrefix + '0102', 404));
+            next(new BasicError('Failed to add user', errorPrefix + errorCodes.resource_not_added, 404));
             return;
           } else {
             res.send(user);
@@ -50,7 +51,7 @@ class UsersBusiness {
     dl.getOne(req.params.id)
       .then(user => {
         if (!user) {
-          next(new BasicError('User not found', codePrefix + '0101', 404));
+          next(new BasicError('User not found', errorPrefix + errorCodes.resource_not_found, 404));
         } else {
           res.send(user);
         }
@@ -67,7 +68,7 @@ class UsersBusiness {
       dl.updateOne(req.params.id, user)
         .then(response => {
           if (response.matchedCount !== 1) {
-            next(new BasicError('User not found', codePrefix + '0101', 404));
+            next(new BasicError('User not found', errorPrefix + errorCodes.resource_not_found, 404));
             return;
           } else {
             res.send(user);
@@ -81,7 +82,7 @@ class UsersBusiness {
     dl.deleteOne(req.params.id)
       .then(response => {
         if (response.deletedCount !== 1) {
-          next(new BasicError('User not found', codePrefix + '0101', 404));
+          next(new BasicError('User not found', errorPrefix + errorCodes.resource_not_found, 404));
           return;
         } else {
           res.send({deletedCount: response.deletedCount});
@@ -91,5 +92,6 @@ class UsersBusiness {
   }
 
 }
+
 
 module.exports = UsersBusiness;
