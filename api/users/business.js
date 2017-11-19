@@ -6,7 +6,7 @@ const chance = new require('chance')(),
   Validate = base.Validate,
   BasicError = base.errors.BasicError,
   errorCodes = base.errors.errorCodes,
-  errorPrefix = '100-';
+  errorPrefix = '300-';
 
 let req = null, res = null, next = null, dl = null;
 

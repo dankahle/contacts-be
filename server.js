@@ -13,11 +13,11 @@ const express = require('express'),
   docsRouter = require('./docs/_router'),
   contactsRouter = require('./api/contacts/_router'),
   usersRouter = require('./api/users/_router'),
+  loginRouter = require('./api/login/_loginRouter'),
+  registerRouter = require('./api/login/_registerRouter'),
+  authenticate = require('./api/login/_authenticate'),
   cors = require('cors'),
   base = require('node-base'),
-  loginRouter = base.middleware.loginRouter,
-  registerRouter = base.middleware.registerRouter,
-  authenticate = base.middleware.authenticate,
   baseConfig = new base.Config(),
   errorCodes = base.errors.errorCodes,
   initialize = require('./database/init'),
@@ -27,7 +27,6 @@ process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
 });
-
 
 module.exports = new Promise(function (resolve, reject) {
 

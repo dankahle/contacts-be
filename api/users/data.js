@@ -29,6 +29,10 @@ class UsersData {
     return db.findOne({_id: id});
   }
 
+  getOneByName(name){
+    return db.findOne({name: name});
+  }
+
   updateOne(id, user) {
     user.labels = user.labels || [];
     return db.updateOne({_id: id}, user);

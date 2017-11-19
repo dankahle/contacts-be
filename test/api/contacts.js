@@ -5,8 +5,9 @@ const request = require('supertest'),
   server = require('../../server'),
   base = require('node-base'),
   errorCodes = base.errors.errorCodes,
-  Validate = require('file://../node-base').Validate,
-  schema = require('../../api/contacts/schema/schema.json');
+  Validate = base.Validate,
+  schema = require('../../api/contacts/schema/schema.json'),
+  errorPrefix = '200-';
 
 let app = null;
 
@@ -92,7 +93,7 @@ describe('/contacts', function () {
       .get(`/api/contacts/${id404}`)
       .expect(404)
       .expect(function (res) {
-        expect(res.body.errorCode).to.equal('200-0101')
+        expect(res.body.errorCode).to.equal(errorPrefix + errorCodes.resource_not_found)
       })
       .end(done);
   });

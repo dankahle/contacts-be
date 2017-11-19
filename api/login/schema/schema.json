@@ -1,0 +1,14 @@
+{
+  "title": "user",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "_id": {
+      "type": "string",
+      "format": "guid"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

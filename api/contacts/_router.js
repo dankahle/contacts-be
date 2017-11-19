@@ -1,7 +1,7 @@
 const express = require('express'),
   ContactsBusiness = require('./business');
 
-let bl = null, dl = null;
+let bl = null;
 
 router = express.Router();
 module.exports = router;

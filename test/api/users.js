@@ -5,8 +5,9 @@ const request = require('supertest'),
   server = require('../../server'),
   base = require('node-base'),
   errorCodes = base.errors.errorCodes,
-  Validate = require('file://../node-base').Validate,
-  schema = require('../../api/users/schema/schema.json');
+  Validate = base.Validate,
+  schema = require('../../api/users/schema/schema.json'),
+  errorPrefix = '300-';
 
 let app = null;
 
@@ -76,7 +77,7 @@ describe('/users', function() {
       .get(`/api/users/${id404}`)
       .expect(404)
       .expect(function(res) {
-        expect(res.body.errorCode).to.equal('100-' + errorCodes.resource_not_found)
+        expect(res.body.errorCode).to.equal(errorPrefix + errorCodes.resource_not_found)
       })
       .end(done);
   });
