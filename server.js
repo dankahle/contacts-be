@@ -60,12 +60,12 @@ module.exports = new Promise(function (resolve, reject) {
     app.use('/docs', docsRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/register', registerRouter);
-    app.use(authenticate);
+    app.use(authenticate());
     app.use('/api/contacts', contactsRouter);
     app.use('/api/users', usersRouter);
 
-    app.use(base.middleware.notFound);
-    app.use(base.middleware.errorHandler);
+    app.use(base.middleware.notFound());
+    app.use(base.middleware.errorHandler());
 
     let server = null;
     if (config.get('ssl')) {

@@ -4,6 +4,11 @@
   "corsDomain": "http://localhost:4200",
   "database": "mongodb://localhost/contacts",
   "nodeBase": {
-    "showStackWithErrors": true
+    "middleware": {
+      "authenticate": {},
+      "errorHandler": {
+        "showStackWithErrors": false
+      }
+    }
   }
 }
