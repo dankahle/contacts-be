@@ -20,7 +20,7 @@ module.exports = class LoginBusiness {
   getCurrentUser() {
     if (req.cookies.dkAuth) {
       const user = req.cookies.dkAuth;
-      dl.getOne(user.id)
+      dl.getOne(user._id)
         .then(_user => {
           if (_user) {
             res.send(_user);

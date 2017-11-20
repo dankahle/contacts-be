@@ -20,7 +20,6 @@ const express = require('express'),
   base = require('node-base'),
   baseConfig = new base.Config(),
   errorCodes = base.errors.errorCodes,
-  initialize = require('./database/init'),
   errorPrefix = '000-';
 
 process.on('unhandledRejection', (reason, p) => {
