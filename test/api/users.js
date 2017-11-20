@@ -162,7 +162,7 @@ describe('/users', function() {
   it('delete', function(done) {
     request(app)
       .delete(`/api/users/${dankId}`)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('get all after delete', function(done) {

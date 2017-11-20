@@ -178,7 +178,7 @@ describe('/contacts', function () {
   it('deleteOne', function (done) {
     request(app)
       .delete(`/api/contacts/${dankId}`)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('get all after delete', function (done) {
@@ -198,12 +198,7 @@ describe('/contacts', function () {
     request(app)
       .delete(`/api/contacts?label=${labelOne.id}`)
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .expect(res => {
-        expect(res.body.deletedCount).to.equal(2);
-      })
-      .end(done)
+      .expect(204, done)
   });
 
   it('get all after delete by label', function (done) {

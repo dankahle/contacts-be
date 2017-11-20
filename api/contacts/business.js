@@ -52,7 +52,12 @@ class ContactsBusiness {
     const query = {labels: {$elemMatch: {id: req.query.label}}};
     dl.deleteMany(query)
       .then(response => {
-        res.send({deletedCount: response.deletedCount})
+        if (response.deletedCount === 0) {
+          next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
+          return;
+        } else {
+          res.status(204).end();
+        }
       })
       .catch(e => next(e));
   }
@@ -92,11 +97,11 @@ class ContactsBusiness {
   deleteOne() {
     dl.deleteOne(req.params.id)
       .then(response => {
-        if (response.deletedCount !== 1) {
+        if (response.deletedCount === 0) {
           next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
           return;
         } else {
-          res.send({deletedCount: response.deletedCount});
+          res.status(204).end();
         }
       })
       .catch(e => next(e));

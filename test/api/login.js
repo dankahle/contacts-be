@@ -11,7 +11,7 @@ const request = require('supertest'),
 
 let app = null;
 
-describe('authenticate', function () {
+describe('login', function () {
 
   before(function (done) {
     server.then(function (_app) {
@@ -78,7 +78,7 @@ describe('authenticate', function () {
         try {
           request(app)
             .delete(`/api/users/${newUser._id}`)
-            .expect(200, done);
+            .expect(204, done);
         } catch(e) {
           done(e);
         }

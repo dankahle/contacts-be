@@ -26,3 +26,7 @@ router.get('/current', function(req, res, next) {
 router.post('/', function (req, res, next) {
   bl.login();
 })
+
+router.delete('/', function (req, res, next) {
+  bl.logout();
+})

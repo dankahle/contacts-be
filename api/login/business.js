@@ -53,6 +53,11 @@ module.exports = class LoginBusiness {
     }
   }
 
+  logout() {
+    res.clearCookie('dkAuth');
+    res.status(204).end();
+  }
+
   register() {
     const error = Validate.validateObject(req.body, schema);
     if (error) {
