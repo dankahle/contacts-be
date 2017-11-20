@@ -29,13 +29,13 @@ describe('/users', function() {
     labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', label: 'label one'};
 
   const users = [
-    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels: [labelOne]},
-    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
-    {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels: [labelOne]},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
   ];
 
   const mary = {name: 'mary'};
-  const kate = {_id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
+  const kate = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
 
 
   it('shows enpoint not found', function(done) {
@@ -82,7 +82,7 @@ describe('/users', function() {
       .end(done);
   });
 
-  it('post with no _id or labels', function(done) {
+  it('post with no id or labels', function(done) {
     request(app)
       .post(`/api/users`)
       .send(mary)
@@ -90,7 +90,7 @@ describe('/users', function() {
       .expect(function(res) {
         const contact = res.body
         expect(contact.name).to.equal(mary.name);
-        expect(Validate.validateGuid(contact._id)).to.be.true;
+        expect(Validate.validateGuid(contact.id)).to.be.true;
         expect(Validate.validateObject(contact, schema)).to.be.undefined;
       })
       .end(done)
@@ -109,7 +109,7 @@ describe('/users', function() {
       .end(done)
   });
 
-  it('post with _id and labels', function(done) {
+  it('post with id and labels', function(done) {
     request(app)
       .post(`/api/users`)
       .send(kate)
@@ -137,11 +137,11 @@ describe('/users', function() {
   it('PUT /api/users/:id', function(done) {
     request(app)
       .put(`/api/users/${dankId}`)
-      .send({_id: dankId, name: 'dank2'})
+      .send({id: dankId, name: 'dank2'})
       .expect(200)
       .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
-        expect(res.body._id).to.equal(dankId);
+        expect(res.body.id).to.equal(dankId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)
@@ -153,7 +153,7 @@ describe('/users', function() {
       .expect(200)
       .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
-        expect(res.body._id).to.equal(dankId);
+        expect(res.body.id).to.equal(dankId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)

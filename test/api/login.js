@@ -1,4 +1,5 @@
 const request = require('supertest'),
+  chance = new require('chance')(),
   express = require('express'),
   expect = require('chai').expect,
   _ = require('lodash'),
@@ -43,7 +44,7 @@ describe('login', function () {
       .expect(function (res) {
         expect(res.headers['set-cookie']).to.match(/dkAuth/)
         expect(res.body.name).to.equal('dank');
-        expect(Validate.validateGuid(res.body._id)).to.be.true;
+        expect(Validate.validateGuid(res.body.id)).to.be.true;
       })
       .end(done)
   })
@@ -70,14 +71,14 @@ describe('login', function () {
         newUser = res.body;
         expect(res.headers['set-cookie']).to.match(/dkAuth/)
         expect(res.body.name).to.equal('newreg');
-        expect(Validate.validateGuid(res.body._id)).to.be.true;
+        expect(Validate.validateGuid(res.body.id)).to.be.true;
       })
       .end(function(err, res) {
         // cleanup added newreg user
         if (err) done(err);
         try {
           request(app)
-            .delete(`/api/users/${newUser._id}`)
+            .delete(`/api/users/${newUser.id}`)
             .expect(204, done);
         } catch(e) {
           done(e);

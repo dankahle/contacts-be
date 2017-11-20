@@ -1,4 +1,4 @@
-const chance = new require('chance')();
+
 
 let req = null, res = null, next = null, db = null;
 
@@ -19,14 +19,12 @@ class UsersData {
   }
 
   addOne(user) {
-    user._id = user._id || chance.guid(); // allow the UI to set an id to keep track of things
-    user.labels = user.labels || [];
     return db.insertOne(user);
   }
 
   ////////////// "/:id"
   getOne(id){
-    return db.findOne({_id: id});
+    return db.findOne({id: id});
   }
 
   getOneByName(name){
@@ -34,12 +32,11 @@ class UsersData {
   }
 
   updateOne(id, user) {
-    user.labels = user.labels || [];
-    return db.updateOne({_id: id}, user);
+    return db.updateOne({id: id}, user);
   }
 
   deleteOne(id) {
-    return db.removeOne({_id: id});
+    return db.removeOne({id: id});
   }
 
 }

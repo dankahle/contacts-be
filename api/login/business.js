@@ -1,4 +1,5 @@
 const schema = require('./schema/schema.json'),
+  chance = new require('chance')(),
   UserData = require('../users/data'),
   base = require('node-base'),
   Validate = base.Validate,
@@ -20,10 +21,10 @@ module.exports = class LoginBusiness {
   getCurrentUser() {
     if (req.cookies.dkAuth) {
       const user = req.cookies.dkAuth;
-      dl.getOne(user._id)
+      dl.getOne(user.id)
         .then(_user => {
           if (_user) {
-            res.send(_user);
+            res.send(this.removeProps(_user));
           } else {
             next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.resource_not_found, 404));
           }
@@ -47,7 +48,7 @@ module.exports = class LoginBusiness {
             return;
           }
           res.cookie('dkAuth', _user, {httpOnly: true});
-          res.send(_user);
+          res.send(this.removeProps(_user));
         })
         .catch(next);
     }
@@ -64,6 +65,7 @@ module.exports = class LoginBusiness {
       next(error);
     } else {
       const user = req.body;
+      this.addProps(user);
       dl.getOneByName(user.name)
         .then(_user => {
           if (_user) {
@@ -74,7 +76,7 @@ module.exports = class LoginBusiness {
             .then(resp => {
               if(resp.insertedCount === 1) {
                 res.cookie('dkAuth', user, {httpOnly: true});
-                res.send(user);
+                res.send(this.removeProps(user));
               } else {
                 next(new BasicError('User not registered', errorCodes.server_prefix + errorCodes.user_not_registered))
               }
@@ -84,6 +86,18 @@ module.exports = class LoginBusiness {
         .catch(next);
     }
   }
+
+  addProps(obj) {
+    obj.id = obj.id || chance.guid();
+    obj.labels = obj.labels || [];
+    return obj;
+  }
+
+  removeProps(obj) {
+    delete obj._id;
+    return obj;
+  }
+
 }
 
 

@@ -23,12 +23,16 @@ class UsersBusiness {
   getMany() {
     const query = {};
     dl.getMany(query)
-      .then(users => res.send(users))
+      .then(users => {
+        users.map(user => this.removeProps(user));
+        res.send(users);
+      })
       .catch(e => next(e));
   }
 
   addOne() {
     const user = req.body;
+    this.addProps(user);
     const error = Validate.validateObject(req.body, schemaPost);
     if (error) {
       next(error);
@@ -39,7 +43,7 @@ class UsersBusiness {
             next(new BasicError('Failed to add user', errorPrefix + errorCodes.resource_not_added, 404));
             return;
           } else {
-            res.send(user);
+            res.send(this.removeProps(user));
           }
         })
         .catch(e => next(e));
@@ -53,7 +57,7 @@ class UsersBusiness {
         if (!user) {
           next(new BasicError('User not found', errorPrefix + errorCodes.resource_not_found, 404));
         } else {
-          res.send(user);
+          res.send(this.removeProps(user));
         }
       })
       .catch(e => next(e));
@@ -61,6 +65,7 @@ class UsersBusiness {
 
   putOne() {
     const user = req.body;
+    this.addProps(user);
     const error = Validate.validateObject(req.body, schema);
     if (error) {
       next(error);
@@ -71,7 +76,7 @@ class UsersBusiness {
             next(new BasicError('User not found', errorPrefix + errorCodes.resource_not_found, 404));
             return;
           } else {
-            res.send(user);
+            res.send(this.removeProps(user));
           }
         })
         .catch(e => next(e));
@@ -89,6 +94,17 @@ class UsersBusiness {
         }
       })
       .catch(e => next(e));
+  }
+
+  addProps(obj) {
+    obj.id = obj.id || chance.guid();
+    obj.labels = obj.labels || [];
+    return obj;
+  }
+
+  removeProps(obj) {
+    delete obj._id;
+    return obj;
   }
 
 }

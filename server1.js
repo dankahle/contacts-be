@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
         res.cookie('dkAuth', {id: 'xxx', name: 'dank'});
         console.log('setcookie');
       } else {
-        console.log('foundcookie', req.cookies.dkAuth._id);
+        console.log('foundcookie', req.cookies.dkAuth.id);
       }
       next();
     });

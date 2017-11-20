@@ -1,4 +1,5 @@
-const schema = require('./schema/schema.json'),
+const chance = new require('chance')(),
+  schema = require('./schema/schema.json'),
   schemaPost = require('./schema/schemaPost.json'),
   ContactsData = require('./data'),
   base = require('node-base'),
@@ -22,12 +23,16 @@ class ContactsBusiness {
   getMany() {
     const query = req.query.label ? {labels: {$elemMatch: {id: req.query.label}}} : {};
     dl.getMany(query)
-      .then(contacts => res.send(contacts))
+      .then(contacts => {
+        contacts.map(contact => this.removeProps(contact));
+        res.send(contacts);
+      })
       .catch(e => next(e));
   }
 
   addOne() {
     const contact = req.body;
+    this.addProps(contact);
     const error = Validate.validateObject(req.body, schemaPost);
     if (error) {
       next(error);
@@ -38,7 +43,7 @@ class ContactsBusiness {
             next(new BasicError('Failed to add contact', errorPrefix + errorCodes.resource_not_added, 404));
             return;
           } else {
-            res.send(contact);
+            res.send(this.removeProps(contact));
           }
         })
         .catch(e => next(e));
@@ -69,7 +74,7 @@ class ContactsBusiness {
         if (!contact) {
           next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
         } else {
-          res.send(contact);
+          res.send(this.removeProps(contact));
         }
       })
       .catch(e => next(e));
@@ -77,6 +82,7 @@ class ContactsBusiness {
 
   putOne() {
     const contact = req.body;
+    this.addProps(contact);
     const error = Validate.validateObject(req.body, schema);
     if (error) {
       next(error);
@@ -87,7 +93,7 @@ class ContactsBusiness {
             next(new BasicError('Contact not found', errorPrefix + errorCodes.resource_not_found, 404));
             return;
           } else {
-            res.send(contact);
+            res.send(this.removeProps(contact));
           }
         })
         .catch(e => next(e));
@@ -105,6 +111,17 @@ class ContactsBusiness {
         }
       })
       .catch(e => next(e));
+  }
+
+  addProps(obj) {
+    obj.id = obj.id || chance.guid();
+    obj.labels = obj.labels || [];
+    return obj;
+  }
+
+  removeProps(obj) {
+    delete obj._id;
+    return obj;
   }
 
 }
