@@ -46,7 +46,7 @@ module.exports = class LoginBusiness {
             next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.user_not_found, 404))
             return;
           }
-          res.cookie('dkAuth', _user);
+          res.cookie('dkAuth', _user, {httpOnly: true});
           res.send(_user);
         })
         .catch(next);
@@ -68,7 +68,7 @@ module.exports = class LoginBusiness {
           dl.addOne(user)
             .then(resp => {
               if(resp.insertedCount === 1) {
-                res.cookie('dkAuth', user);
+                res.cookie('dkAuth', user, {httpOnly: true});
                 res.send(user);
               } else {
                 next(new BasicError('User not registered', errorCodes.server_prefix + errorCodes.user_not_registered))
