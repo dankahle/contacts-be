@@ -26,7 +26,7 @@ describe('/users', function() {
 
   const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
-    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', label: 'label one'};
+    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
 
   const users = [
     {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels: [labelOne]},

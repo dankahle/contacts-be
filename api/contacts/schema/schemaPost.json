@@ -8,13 +8,13 @@
       "items": {
         "title": "label",
         "type": "object",
-        "required": ["id", "label"],
+        "required": ["id", "name"],
         "properties": {
           "id": {
             "type": "string",
             "format": "guid"
           },
-          "label": {
+          "name": {
             "type": "string"
           }
         }

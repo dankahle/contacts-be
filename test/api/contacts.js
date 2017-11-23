@@ -26,7 +26,7 @@ describe('/contacts', function () {
 
   const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
-    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', label: 'label one'};
+    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
 
   const contacts = [
     {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1', name: 'dank', labels: [labelOne]},
@@ -131,7 +131,7 @@ describe('/contacts', function () {
       .send(kate)
       .expect(200)
       .expect(function(res) {
-        expect(res.body).to.eql(_.assign({labels: []}, kate));
+        expect(res.body).to.eql(kate);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)
