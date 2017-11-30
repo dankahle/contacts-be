@@ -25,6 +25,12 @@ class ContactsData {
       })
   }
 
+  updateMany(contacts) {
+    const arr = [];
+    contacts.forEach(contact => arr.push(db.updateOne({id: contact.id}, contact)))
+    return Promise.all(arr);
+  }
+
   deleteMany(query) {
     return db.removeMany(query);
   }

@@ -27,10 +27,10 @@
     "name": {
       "type": "string"
     },
-    "lastName": {
+    "firstName": {
       "type": "string"
     },
-    "firstName": {
+    "lastName": {
       "type": "string"
     },
     "nickName": {

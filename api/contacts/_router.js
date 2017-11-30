@@ -21,8 +21,12 @@ router.post('/', function (req, res, next) {
   bl.addOne()
 })
 
+router.put('/', function (req, res) {
+  bl.updateMany()
+})
+
 router.delete('/', function (req, res) {
-  bl.deleteMany();
+  bl.deleteByLabel();
 })
 
 router.get('/:id', function (req, res, next) {

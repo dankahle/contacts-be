@@ -1,12 +1,12 @@
 
 
 
-test 404 for /api/contacts and users
+added new endpoints, need to add to docs and test
+
+contacts.deleteByLabel
+contacts.updateMany
 
 
-test 404 in general for no endpoint, is this done in nodebase?? or here? here I assume, needs to be tested for every site I figure
-
-test error handler // node-base or here?? here I assume
 
 
 

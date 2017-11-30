@@ -50,7 +50,14 @@ class ContactsBusiness {
     }
   }
 
-  deleteMany() {
+  updateMany() {
+    const contacts = req.body;
+    dl.updateMany(contacts)
+      .then(response => res.status(204).end())
+      .catch(e => next(e));
+  }
+
+  deleteByLabel() {
     if (!req.query.label) {
       next(new BasicError('No label supplied', errorPrefix + errorCodes.invalid_parameters, 400))
     }
