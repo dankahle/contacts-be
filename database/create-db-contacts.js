@@ -15,7 +15,9 @@ var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', i
 var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
 var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label three', icon: 'label'};
 var contacts = [
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'mary', labels:[labelOne, labelTwo]},
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'mary', labels:[labelOne, labelTwo],
+    emails: [{email: 'mary@gmail.com', label: 'mary\'s label'}]
+  },
   {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e2', name: 'jane', labels:[]},
   {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e3', name: 'martha', labels:[labelOne]},
 ];
