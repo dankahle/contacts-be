@@ -14,7 +14,7 @@ The backend rest api for the contacts-fe project
 ### get started  
 **initialize mongodb database** (assumes a local instance)
 ```bash
-./init-db-contacts.sh
+npm run seed
 ```
 **start server**
 ```bash
