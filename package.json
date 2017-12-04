@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "./init-db-unit.sh && ./node_modules/mocha/bin/mocha test/** --reporter spec --exit --timeout 2000",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "mongo database/create-db-contacts.js",
+    "seedunit": "mongo database/create-db-unit.js"
   },
   "repository": {
     "type": "git",
