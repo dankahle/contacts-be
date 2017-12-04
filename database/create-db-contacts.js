@@ -14,10 +14,14 @@ db.users.createIndex({name:1});
 var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', icon: 'label'};
 var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
 var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label three', icon: 'label'};
+
 var contacts = [
-  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'mary', labels:[labelOne, labelTwo],
-    emails: [{email: 'mary@gmail.com', label: 'mary\'s label', phone: '111-222-3333',
-      notes: 'dsfsdaf sdf sadf asdf sdaf asdf sad fasd fa sdf sadfas dfasd '}]
+  {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1',
+    name: 'mary',
+    labels:[labelOne, labelTwo],
+    phones: [{country: 'usa', phone: '111-222-3333', label: 'my phone'}],
+    emails: [{email: 'mary@gmail.com', label: 'mary\'s label'}],
+    notes: 'dsfsdaf sdf sadf asdf sdaf asdf sad fasd fa sdf sadfas dfasd ',
   },
   {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e2', name: 'jane', labels:[]},
   {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e3', name: 'martha', labels:[labelOne]},
