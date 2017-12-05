@@ -11,9 +11,9 @@ db.createCollection('users');
 db.users.createIndex({id:1}, {unique: true});
 db.users.createIndex({name:1});
 
-var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', icon: 'label'};
-var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
-var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label three', icon: 'label'};
+var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label1', icon: 'label'};
+var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label2', icon: 'label'};
+var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label3', icon: 'label'};
 
 var contacts = [
   {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1',
