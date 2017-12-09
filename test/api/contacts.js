@@ -25,14 +25,14 @@ describe('/contacts', function () {
   })
 
   const dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
-    dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
+    janeId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
     labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
 
   const contacts = [
-    {userId: dankUserId, id: dankId, name: 'dank', labels: [labelOne]},
-    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
-    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
+    {userId: dankUserId, id: janeId, name: 'jane', labels: [labelOne]},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels: []},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels: [labelOne]},
   ];
 
   const mary = {name: 'mary'};
@@ -59,7 +59,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'dank', 'jim']); // should sort
+        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'jane', 'martha']); // should sort
         arr.forEach(contact => {
           expect(Validate.validateObject(contact, schema)).to.be.undefined;
         })
@@ -76,7 +76,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(2);
-        expect(_.map(arr, 'name')).to.be.eql(['dank', 'jim']);
+        expect(_.map(arr, 'name')).to.be.eql(['jane', 'martha']);
         arr.forEach(contact => {
           expect(Validate.validateObject(contact, schema)).to.be.undefined;
         })
@@ -86,7 +86,7 @@ describe('/contacts', function () {
 
   it('get one', function (done) {
     request(app)
-      .get(`/api/contacts/${dankId}`)
+      .get(`/api/contacts/${janeId}`)
       .expect(200)
       .expect(function(res) {
         const contact = res.body;
@@ -121,7 +121,7 @@ describe('/contacts', function () {
       .end(done)
   });
 
-  it('get all after post', function(done) {
+  it('get all after post mary', function(done) {
     request(app)
       .get('/api/contacts')
       .expect(200)
@@ -148,28 +148,28 @@ describe('/contacts', function () {
       .end(done)
   });
 
-  it('get all after post', function(done) {
+  it('get all after post kate', function(done) {
     request(app)
       .get('/api/contacts')
       .expect(200)
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.equal(5);
-        expect(arr[3].name).to.equal(kate.name);
-        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
+        expect(arr[2].name).to.equal(kate.name);
+        expect(Validate.validateObject(arr[2], schema)).to.be.undefined;
       })
       .end(done)
   });
 
   it('PUT /api/contacts/:id', function (done) {
     request(app)
-      .put(`/api/contacts/${dankId}`)
-      .send({userId: dankUserId, _id: dankMongoId, id: dankId, name: 'dank2'})
+      .put(`/api/contacts/${janeId}`)
+      .send({userId: dankUserId, _id: dankMongoId, id: janeId, name: 'dank2'})
       .expect(200)
       .expect(function (res) {
         expect(res.body.name).to.be.equal('dank2');
         expect(res.body.userId).to.equal(dankUserId);
-        expect(res.body.id).to.equal(dankId);
+        expect(res.body.id).to.equal(janeId);
         expect(res.body._id).to.equal(dankMongoId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
@@ -178,12 +178,12 @@ describe('/contacts', function () {
 
   it('get one after put', function (done) {
     request(app)
-      .get(`/api/contacts/${dankId}`)
+      .get(`/api/contacts/${janeId}`)
       .expect(200)
       .expect(function (res) {
         expect(res.body.name).to.be.equal('dank2');
         expect(res.body.userId).to.equal(dankUserId);
-        expect(res.body.id).to.equal(dankId);
+        expect(res.body.id).to.equal(janeId);
         expect(res.body._id).to.equal(dankMongoId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
@@ -192,7 +192,7 @@ describe('/contacts', function () {
 
   it('deleteOne', function (done) {
     request(app)
-      .delete(`/api/contacts/${dankId}`)
+      .delete(`/api/contacts/${janeId}`)
       .expect(204, done);
   });
 
@@ -203,7 +203,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'kate', 'mary']);
+        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'kate', 'martha', 'mary']);
       })
       .end(done)
 
@@ -223,7 +223,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(2);
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'mary']);
+        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'mary']);
       })
       .end(done)
   });

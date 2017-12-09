@@ -14,7 +14,7 @@ module.exports = function(options) {
       if (process.env.NODE_ENV === 'unit' && req.url !== '/cause-401-endpoint') {
         const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
           labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
-        req.user = {id: dankId, name: 'dank', labels:[labelOne]};
+        req.user = {id: dankId, name: 'dank', company: 'dank co', labels:[labelOne]};
         next();
       } else {
         next(new BasicError('Not authenticated', errorCodes.server_prefix + errorCodes.user_not_authenticated, 401));

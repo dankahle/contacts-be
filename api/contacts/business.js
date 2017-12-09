@@ -83,7 +83,7 @@ class ContactsBusiness {
       .catch(e => next(e));
   }
 
-  putOne() {
+  updateOne() {
     const contact = req.body;
     const error = Validate.validateObject(req.body, schema);
     if (error) {

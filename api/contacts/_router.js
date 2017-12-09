@@ -34,7 +34,7 @@ router.get('/:id', function (req, res, next) {
 })
 
 router.put('/:id', function (req, res) {
-  bl.putOne()
+  bl.updateOne()
 })
 
 router.delete('/:id', function (req, res) {

@@ -59,7 +59,7 @@ class UsersBusiness {
       .catch(e => next(e));
   }
 
-  putOne() {
+  updateOne() {
     const user = req.body;
     const error = Validate.validateObject(req.body, schema);
     if (error) {

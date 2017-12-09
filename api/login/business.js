@@ -41,7 +41,7 @@ module.exports = class LoginBusiness {
       next(error);
     } else {
       const user = req.body;
-      dl.getOneByName(req.body.name)
+      dl.getOneByQuery({name: user.name, company: user.company})
         .then(_user => {
           if (!_user) {
             next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.user_not_found, 404))
@@ -65,7 +65,7 @@ module.exports = class LoginBusiness {
       next(error);
     } else {
       const user = req.body;
-      dl.getOneByName(user.name)
+      dl.getOneByQuery({name: user.name, company: user.company})
         .then(_user => {
           if (_user) {
             next(new BasicError('User already exists', errorCodes.server_prefix + errorCodes.user_already_exists, 400));

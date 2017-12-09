@@ -4,7 +4,7 @@
       "type": "object",
       "properties": {
       },
-      "required": ["id", "name"]
+      "required": ["id", "name", "company"]
     },
     {
       "$ref": "schemaPost.json"

@@ -22,6 +22,7 @@ class UsersData {
   addOne(user) {
     user.id = user.id || chance.guid();
     user.labels = user.labels || [];
+    user.modified = user.created = new Date().toISOString();
     return db.insertOne(user);
   }
 
@@ -30,12 +31,21 @@ class UsersData {
     return db.findOne({id: id});
   }
 
-  getOneByName(name){
-    return db.findOne({name: name});
+  getOneByQuery(query){
+    return db.findOne(query);
+  }
+
+  getOneByQuery(query){
+    return db.findOne(query);
+  }
+
+  getOneByNameAndCompany(user){
+    return db.findOne({name: user.name, });
   }
 
   updateOne(id, user) {
     user._id = ObjectId(user._id);
+    user.modified = new Date().toISOString();
     return db.updateOne({id: id}, user);
   }
 

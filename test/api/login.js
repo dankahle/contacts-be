@@ -38,12 +38,12 @@ describe('login', function () {
   it('login user', function (done) {
     request(app)
       .post('/api/login')
-      .send({name: 'udank'})
+      .send({name: 'dank', company: 'dank co'})
       .expect(200)
       .expect('set-cookie', /dkAuth=/)
       .expect(function (res) {
         expect(res.headers['set-cookie']).to.match(/dkAuth/)
-        expect(res.body.name).to.equal('udank');
+        expect(res.body.name).to.equal('dank');
         expect(Validate.validateGuid(res.body.id)).to.be.true;
       })
       .end(done)
@@ -52,7 +52,7 @@ describe('login', function () {
   it('register user already exists', function (done) {
     request(app)
       .post('/api/register')
-      .send({name: 'udank'})
+      .send({name: 'dank', company: 'dank co'})
       .expect(400)
       .expect(function (res) {
         expect(res.body.errorCode).to.equal(errorCodes.server_prefix + errorCodes.user_already_exists);

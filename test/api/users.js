@@ -30,13 +30,13 @@ describe('/users', function() {
   let dankMongoId;
 
   const users = [
-    {id: dankId, name: 'udank', labels: [labelOne]},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2', name: 'carl', labels: []},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', labels: [labelOne]},
+    {id: dankId, name: 'dank', company: 'dank co', labels: [labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2', name: 'carl', company: 'carl co', labels: [], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', company: 'jim co', labels: [labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
   ];
 
-  const mary = {name: 'mary'};
-  const kate = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
+  const steve = {name: 'steve', company: 'steve co'};
+  const john = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'john', company: 'john co', labels:[labelOne]};
 
 
   it('shows enpoint not found', function(done) {
@@ -59,7 +59,7 @@ describe('/users', function() {
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'udank']); // should sort
+        expect(_.map(arr, 'name')).to.be.eql(['carl', 'dank', 'jim']); // should sort
         arr.forEach(user => {
           expect(Validate.validateObject(user, schema)).to.be.undefined;
         })
@@ -93,26 +93,30 @@ describe('/users', function() {
   it('post with no id or labels', function(done) {
     request(app)
       .post(`/api/users`)
-      .send(mary)
+      .send(steve)
       .expect(200)
       .expect(function(res) {
         const contact = res.body
-        expect(contact.name).to.equal(mary.name);
+        expect(contact.name).to.equal(steve.name);
+        expect(contact.company).to.equal(steve.company);
         expect(Validate.validateGuid(contact.id)).to.be.true;
         expect(Validate.validateObject(contact, schema)).to.be.undefined;
       })
       .end(done)
   });
 
-  it('get all after post mary', function(done) {
+  it('get all after post steve', function(done) {
     request(app)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(arr[2].name).to.equal(mary.name);
-        expect(Validate.validateObject(arr[2], schema)).to.be.undefined;
+        expect(arr[3].name).to.equal(steve.name);
+        expect(arr[3].company).to.equal(steve.company);
+        expect(arr[3].created).to.exist;
+        expect(arr[3].modified).to.exist;
+        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -120,26 +124,45 @@ describe('/users', function() {
   it('post with id and labels', function(done) {
     request(app)
       .post(`/api/users`)
-      .send(kate)
+      .send(john)
       .expect(200)
       .expect(function(res) {
         const user = res.body;
         delete user._id;
-        expect(user).to.eql(_.assign({labels: []}, kate));
+        expect(user.name).to.equal('john');
+        expect(user.company).to.equal('john co');
+        expect(user.created).to.exist;
+        expect(user.modified).to.exist;
+        expect(user.labels).to.exist;
         expect(Validate.validateObject(user, schema)).to.be.undefined;
       })
       .end(done)
   });
 
-  it('get all after post kate', function(done) {
+  it('get all after post john', function(done) {
     request(app)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.equal(5);
-        expect(arr[2].name).to.equal(kate.name);
-        expect(Validate.validateObject(arr[2], schema)).to.be.undefined;
+        expect(arr[3].name).to.equal(john.name);
+        expect(arr[3].company).to.equal(john.company);
+        expect(arr[3].created).to.exist;
+        expect(arr[3].modified).to.exist;
+        expect(arr[3].labels[0]).to.eql(labelOne);
+        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
+      })
+      .end(done)
+  });
+
+  let lastModifiedTime;
+  it('get one before put', function(done) {
+    request(app)
+      .get(`/api/users/${dankId}`)
+      .expect(200)
+      .expect(function(res) {
+        lastModifiedTime = new Date(res.body.modified).getTime();
       })
       .end(done)
   });
@@ -147,12 +170,14 @@ describe('/users', function() {
   it('PUT /api/users/:id', function(done) {
     request(app)
       .put(`/api/users/${dankId}`)
-      .send({_id: dankMongoId, id: dankId, name: 'dank2'})
+      .send({_id: dankMongoId, id: dankId, name: 'dank2', company: 'dank co'})
       .expect(200)
       .expect(function(res) {
-        expect(res.body.name).to.be.equal('dank2');
-        expect(res.body.id).to.equal(dankId);
-        expect(res.body._id).to.equal(dankMongoId);
+        const user = res.body;
+        expect(user.name).to.be.equal('dank2');
+        expect(user.id).to.equal(dankId);
+        expect(user._id).to.equal(dankMongoId);
+        expect(new Date(user.modified).getTime()).to.be.greaterThan(lastModifiedTime)
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
       .end(done)
@@ -185,7 +210,7 @@ describe('/users', function() {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
         expect(_.find(arr, {id: dankId})).to.be.undefined;
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'kate', 'mary']);
+        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'john', 'steve']);
       })
       .end(done)
   });
