@@ -48,7 +48,7 @@ module.exports = class LoginBusiness {
             return;
           }
           res.cookie('dkAuth', _user, {httpOnly: true});
-          res.send(this.removeProps(_user));
+          res.send(_user);
         })
         .catch(next);
     }
@@ -65,7 +65,6 @@ module.exports = class LoginBusiness {
       next(error);
     } else {
       const user = req.body;
-      this.addProps(user);
       dl.getOneByName(user.name)
         .then(_user => {
           if (_user) {
@@ -76,7 +75,7 @@ module.exports = class LoginBusiness {
             .then(resp => {
               if(resp.insertedCount === 1) {
                 res.cookie('dkAuth', user, {httpOnly: true});
-                res.send(this.removeProps(user));
+                res.send(user);
               } else {
                 next(new BasicError('User not registered', errorCodes.server_prefix + errorCodes.user_not_registered))
               }
@@ -85,17 +84,6 @@ module.exports = class LoginBusiness {
         })
         .catch(next);
     }
-  }
-
-  addProps(obj) {
-    obj.id = obj.id || chance.guid();
-    obj.labels = obj.labels || [];
-    return obj;
-  }
-
-  removeProps(obj) {
-    delete obj._id;
-    return obj;
   }
 
 }

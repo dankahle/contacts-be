@@ -1,4 +1,5 @@
-
+const chance = new require('chance')(),
+  ObjectId = require('mongodb').ObjectId;
 
 let req = null, res = null, next = null, db = null;
 
@@ -14,11 +15,14 @@ class ContactsData {
   ///////////////////// "/"
   getMany(query) {
     return db.find(query)
-      .sort({name:1})
+      .sort({name: 1})
       .toArray();
   }
 
   addOne(contact) {
+    // add properties we expect to be there like mongoose would
+    contact.id = contact.id || chance.guid();
+    contact.labels = contact.labels || [];
     return db.insertOne(contact)
       .then(result => {
         return result;
@@ -36,11 +40,12 @@ class ContactsData {
   }
 
   ///////////////////// "/:id"
-  getOne(id){
+  getOne(id) {
     return db.findOne({id: id})
   }
 
   updateOne(id, contact) {
+    contact._id = ObjectId(contact._id);
     return db.updateOne({id: id}, contact)
   }
 

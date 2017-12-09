@@ -1,4 +1,5 @@
-
+const chance = new require('chance')(),
+  ObjectId = require('mongodb').ObjectId;
 
 let req = null, res = null, next = null, db = null;
 
@@ -19,6 +20,8 @@ class UsersData {
   }
 
   addOne(user) {
+    user.id = user.id || chance.guid();
+    user.labels = user.labels || [];
     return db.insertOne(user);
   }
 
@@ -32,6 +35,7 @@ class UsersData {
   }
 
   updateOne(id, user) {
+    user._id = ObjectId(user._id);
     return db.updateOne({id: id}, user);
   }
 
