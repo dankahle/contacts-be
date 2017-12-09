@@ -24,15 +24,15 @@ describe('/users', function() {
     done();
   })
 
-  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
+  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
     labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
   let dankMongoId;
 
   const users = [
-    {id: dankId, name: 'dank', labels: [labelOne]},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
+    {id: dankId, name: 'udank', labels: [labelOne]},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2', name: 'carl', labels: []},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', labels: [labelOne]},
   ];
 
   const mary = {name: 'mary'};
@@ -59,7 +59,7 @@ describe('/users', function() {
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
-        expect(_.map(arr, 'name')).to.be.eql(['carl', 'dank', 'jim']); // should sort
+        expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'udank']); // should sort
         arr.forEach(user => {
           expect(Validate.validateObject(user, schema)).to.be.undefined;
         })
@@ -104,15 +104,15 @@ describe('/users', function() {
       .end(done)
   });
 
-  it('get all after post', function(done) {
+  it('get all after post mary', function(done) {
     request(app)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(arr[3].name).to.equal(mary.name);
-        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
+        expect(arr[2].name).to.equal(mary.name);
+        expect(Validate.validateObject(arr[2], schema)).to.be.undefined;
       })
       .end(done)
   });
@@ -131,15 +131,15 @@ describe('/users', function() {
       .end(done)
   });
 
-  it('get all after post', function(done) {
+  it('get all after post kate', function(done) {
     request(app)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.equal(5);
-        expect(arr[3].name).to.equal(kate.name);
-        expect(Validate.validateObject(arr[3], schema)).to.be.undefined;
+        expect(arr[2].name).to.equal(kate.name);
+        expect(Validate.validateObject(arr[2], schema)).to.be.undefined;
       })
       .end(done)
   });

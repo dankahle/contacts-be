@@ -24,7 +24,7 @@ module.exports = class LoginBusiness {
       dl.getOne(user.id)
         .then(_user => {
           if (_user) {
-            res.send(this.removeProps(_user));
+            res.send(_user);
           } else {
             next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.resource_not_found, 404));
           }

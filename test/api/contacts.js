@@ -24,18 +24,19 @@ describe('/contacts', function () {
     done();
   })
 
-  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
+  const dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
+    dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
     labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
 
   const contacts = [
-    {id: dankId, name: 'dank', labels: [labelOne]},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
+    {userId: dankUserId, id: dankId, name: 'dank', labels: [labelOne]},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl', labels: []},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'jim', labels: [labelOne]},
   ];
 
   const mary = {name: 'mary'};
-  const kate = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
+  const kate = {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
   let dankMongoId;
 
   it('shows endpoint not found', function (done) {
@@ -163,10 +164,11 @@ describe('/contacts', function () {
   it('PUT /api/contacts/:id', function (done) {
     request(app)
       .put(`/api/contacts/${dankId}`)
-      .send({_id: dankMongoId, id: dankId, name: 'dank2'})
+      .send({userId: dankUserId, _id: dankMongoId, id: dankId, name: 'dank2'})
       .expect(200)
       .expect(function (res) {
         expect(res.body.name).to.be.equal('dank2');
+        expect(res.body.userId).to.equal(dankUserId);
         expect(res.body.id).to.equal(dankId);
         expect(res.body._id).to.equal(dankMongoId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
@@ -180,6 +182,7 @@ describe('/contacts', function () {
       .expect(200)
       .expect(function (res) {
         expect(res.body.name).to.be.equal('dank2');
+        expect(res.body.userId).to.equal(dankUserId);
         expect(res.body.id).to.equal(dankId);
         expect(res.body._id).to.equal(dankMongoId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
