@@ -64,7 +64,7 @@ describe('login', function () {
     let newUser;
     request(app)
       .post('/api/register')
-      .send({name: 'newreg'})
+      .send({name: 'newreg', company: 'newreg co'})
       .expect(200)
       .expect('set-cookie', /dkAuth=/)
       .expect(function (res) {

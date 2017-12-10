@@ -1,13 +1,16 @@
 {
   "title": "user",
   "type": "object",
-  "required": ["name"],
+  "required": ["name", "company"],
   "properties": {
     "id": {
       "type": "string",
       "format": "guid"
     },
     "name": {
+      "type": "string"
+    },
+    "company": {
       "type": "string"
     }
   }

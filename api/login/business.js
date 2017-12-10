@@ -47,7 +47,13 @@ module.exports = class LoginBusiness {
             next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.user_not_found, 404))
             return;
           }
-          res.cookie('dkAuth', _user, {httpOnly: true});
+          const options = {httpOnly: true}
+          if (req.query.stayLoggedIn) {
+            const dt = new Date();
+            dt.setFullYear(dt.getFullYear() + 1);
+            options.expires = dt;
+          }
+          res.cookie('dkAuth', _user, options);
           res.send(_user);
         })
         .catch(next);
