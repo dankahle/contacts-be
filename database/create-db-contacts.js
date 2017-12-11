@@ -31,9 +31,9 @@ var contacts = [
   {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[]},
   {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne]},
 
-  {userId: carlUserId, id: dankContactId, name: 'carl cont1', labels:[labelOneCarl]},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'carl cont2', labels:[]},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'carl cont3', labels:[labelOneCarl]},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e1', name: 'carl cont1', labels:[labelOneCarl]},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e2', name: 'carl cont2', labels:[]},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e3', name: 'carl cont3', labels:[labelOneCarl]},
 ];
 
 var users = [
