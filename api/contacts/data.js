@@ -25,6 +25,10 @@ class ContactsData {
     contact.id = contact.id || chance.guid();
     contact.userId = req.user.id;
     contact.labels = contact.labels || [];
+    contact.emails = contact.emails || [];
+    contact.phones = contact.phones || [];
+    contact.addresses = contact.addresses || [];
+    contact.websites = contact.websites || [];
     return db.insertOne(contact)
       .then(result => {
         return result;
@@ -33,7 +37,10 @@ class ContactsData {
 
   updateMany(contacts) {
     const arr = [];
-    contacts.forEach(contact => arr.push(db.updateOne({userId: req.user.id, id: contact.id}, contact)))
+    contacts.forEach(contact => {
+      contact._id = ObjectId(contact._id);
+      arr.push(db.updateOne({userId: req.user.id, id: contact.id}, contact));
+    })
     return Promise.all(arr);
   }
 

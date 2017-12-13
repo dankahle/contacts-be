@@ -27,18 +27,6 @@
     "name": {
       "type": "string"
     },
-    "firstName": {
-      "type": "string"
-    },
-    "lastName": {
-      "type": "string"
-    },
-    "nickName": {
-      "type": "string"
-    },
-    "fileAs": {
-      "type": "string"
-    },
     "company": {
       "type": "string"
     },
@@ -67,7 +55,7 @@
         "title": "phone",
         "type": "object",
         "properties": {
-          "country": {
+          "prefix": {
             "type": "string"
           },
           "phone": {
@@ -94,26 +82,6 @@
         }
       }
     },
-    "birthday": {
-      "type": "string",
-      "format": "date"
-    },
-    "dates": {
-      "type": "array",
-      "items": {
-        "title": "date",
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "label": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "websites": {
       "type": "array",
       "items": {
@@ -121,66 +89,6 @@
         "type": "object",
         "properties": {
           "website": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "relationships": {
-      "type": "array",
-      "items": {
-        "title": "relationship",
-        "type": "object",
-        "properties": {
-          "relationship": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "IMs": {
-      "type": "array",
-      "items": {
-        "title": "IM",
-        "type": "object",
-        "properties": {
-          "IM": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "internetCalls": {
-      "type": "array",
-      "items": {
-        "title": "internet call",
-        "type": "object",
-        "properties": {
-          "internetCall": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "customs": {
-      "type": "array",
-      "items": {
-        "title": "custom",
-        "type": "object",
-        "properties": {
-          "custom": {
             "type": "string"
           },
           "label": {
