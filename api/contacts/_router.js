@@ -14,15 +14,15 @@ router.use(function (req, res, next) {
 })
 
 router.get('/', function (req, res) {
-  bl.getMany()
+  bl.getMany();
 })
 
 router.post('/', function (req, res, next) {
-  bl.addOne()
+  bl.addOne();
 })
 
 router.put('/', function (req, res) {
-  bl.updateMany()
+  bl.updateMany();
 })
 
 router.delete('/', function (req, res) {
@@ -34,7 +34,8 @@ router.get('/:id', function (req, res, next) {
 })
 
 router.put('/:id', function (req, res) {
-  bl.updateOne()
+  setTimeout(() => bl.updateOne(), 1000);// for spinner visibility in UI
+  // bl.updateOne();
 })
 
 router.delete('/:id', function (req, res) {
