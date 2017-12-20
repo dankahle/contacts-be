@@ -30,13 +30,13 @@ describe('/contacts', function () {
     labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
 
   const contacts = [
-    {userId: dankUserId, id: janeId, name: 'jane', labels: [labelOne]},
-    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels: []},
-    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels: [labelOne]},
+    {userId: dankUserId, id: janeId, name: 'jane', labels: [labelOne], emails: [], phones: [], addresses: [], websites: []},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels: [], emails: [], phones: [], addresses: [], websites: []},
+    {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels: [labelOne], emails: [], phones: [], addresses: [], websites: []},
   ];
 
   const mary = {name: 'mary'};
-  const kate = {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne]};
+  const kate = {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'kate', labels:[labelOne], emails: [], phones: [], addresses: [], websites: []};
   let dankMongoId;
 
   it('shows endpoint not found', function (done) {

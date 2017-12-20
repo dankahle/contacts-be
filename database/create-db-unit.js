@@ -19,13 +19,13 @@ var dankCompany = 'dank co';
 var carlUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2';
 
 var contacts = [
-  {userId: dankUserId, id: janeId, name: 'jane', labels:[labelOne]},
-  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[]},
-  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne]},
+  {userId: dankUserId, id: janeId, name: 'jane', labels:[labelOne], emails: [], phones: [], addresses: [], websites: []},
+  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[], emails: [], phones: [], addresses: [], websites: []},
+  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne], emails: [], phones: [], addresses: [], websites: []},
 
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e1', name: 'carl cont1', labels:[labelOneCarl]},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e2', name: 'carl cont2', labels:[]},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e3', name: 'carl cont3', labels:[labelOneCarl]},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e1', name: 'carl cont1', labels:[labelOneCarl], emails: [], phones: [], addresses: [], websites: []},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e2', name: 'carl cont2', labels:[], emails: [], phones: [], addresses: [], websites: []},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e3', name: 'carl cont3', labels:[labelOneCarl], emails: [], phones: [], addresses: [], websites: []},
 ];
 
 var users = [
