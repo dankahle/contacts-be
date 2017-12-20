@@ -26,18 +26,6 @@ var contacts = [
     company: 'Intel',
     jobTitle: 'manager',
     labels:[labelOne, labelTwo],
-    "phones" : [
-      {
-        "prefix" : "1",
-        "phone" : "111-222-3333",
-        "label" : "my phone1"
-      },
-      {
-        "prefix" : "55",
-        "phone" : "112-222-3333",
-        "label" : "my phone2"
-      }
-    ],
     "emails" : [
       {
         "email" : "jane1@gmail.com",
@@ -50,6 +38,18 @@ var contacts = [
       {
         "email" : "jane3@gmail.com",
         "label" : "jane's label3"
+      }
+    ],
+    "phones" : [
+      {
+        "prefix" : "1",
+        "phone" : "111-222-3333",
+        "label" : "my phone1"
+      },
+      {
+        "prefix" : "55",
+        "phone" : "112-222-3333",
+        "label" : "my phone2"
       }
     ],
     "addresses" : [
@@ -78,12 +78,12 @@ var contacts = [
     ],
     "notes" : "dsfsdaf sdf sadf asdf sdaf asdf sad fasd fa sdf sadfas dfasd ds sdfsdaf sdaf sdafsda f sda f sadf sadf asd f asdfas df asd f asdfsdfsdfsd\none\ntwo\nthree\n"
   },
-  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[], emails: [], addresses: [], websites: []},
-  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne], emails: [], addresses: [], websites: []},
+  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[], emails: [], phones: [], addresses: [], websites: []},
+  {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne], emails: [], phones: [], addresses: [], websites: []},
 
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e1', name: 'carl cont1', labels:[labelOneCarl], emails: [], addresses: [], websites: []},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e2', name: 'carl cont2', labels:[], emails: [], addresses: [], websites: []},
-  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e3', name: 'carl cont3', labels:[labelOneCarl], emails: [], addresses: [], websites: []},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e1', name: 'carl cont1', labels:[labelOneCarl], emails: [], phones: [], addresses: [], websites: []},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e2', name: 'carl cont2', labels:[], emails: [], phones: [], addresses: [], websites: []},
+  {userId: carlUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc3e3', name: 'carl cont3', labels:[labelOneCarl], emails: [], phones: [], addresses: [], websites: []},
 ];
 
 var users = [
