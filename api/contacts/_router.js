@@ -34,8 +34,11 @@ router.get('/:id', function (req, res, next) {
 })
 
 router.put('/:id', function (req, res) {
-  setTimeout(() => bl.updateOne(), 1000);// for spinner visibility in UI
-  // bl.updateOne();
+  if (req.query.delay) {
+    setTimeout(() => bl.updateOne(), parseInt(req.query.delay));// for spinner visibility in UI
+  } else {
+    bl.updateOne();
+  }
 })
 
 router.delete('/:id', function (req, res) {

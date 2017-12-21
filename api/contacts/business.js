@@ -29,7 +29,7 @@ class ContactsBusiness {
 
   addOne() {
     const contact = req.body;
-    const error = Validate.validateObject(req.body, schemaPost);
+    const error = Validate.validateObject(req.body, schemaPost, `${errorPrefix}0021`);
     if (error) {
       next(error);
     } else {
@@ -85,9 +85,10 @@ class ContactsBusiness {
 
   updateOne() {
     const contact = req.body;
-    const error = Validate.validateObject(req.body, schema);
-    if (error) {
-      next(error);
+    const jsonError = Validate.validateObject(req.body, schema, `${errorPrefix}0021`);
+    const validateError = this.validate(contact);
+    if (jsonError || validateError) {
+      next(jsonError || validateError);
     } else {
       dl.updateOne(req.params.id, contact)
         .then(response => {
@@ -113,6 +114,17 @@ class ContactsBusiness {
         }
       })
       .catch(e => next(e));
+  }
+
+  validateMany(contacts) {
+    return contacts.map(contact => this.validate(contact))
+      .filter(err => err);
+  }
+
+  validate(contact) {
+    if (contact.userId && contact.userId !== req.user.id) {
+      return new BasicError('Invalid user', `${errorPrefix}0021}`, 400);
+    }
   }
 
 }

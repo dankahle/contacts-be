@@ -15,13 +15,13 @@ var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label1 really
 var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label2', icon: 'label'};
 var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label3', icon: 'label'};
 var labelOneCarl = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'label one carl'};
-var dankContactId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1';
+var janeContactId = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1';
 var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
 var dankCompany = 'dank co';
 var carlUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2';
 
 var contacts = [
-  {userId: dankUserId, id: dankContactId,
+  {userId: dankUserId, id: janeContactId,
     name: 'jane',
     company: 'Intel',
     jobTitle: 'manager',

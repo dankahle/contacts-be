@@ -5,11 +5,24 @@
       "properties": {
       },
       "required": [
-        "id", "name"
+        "id"
       ]
     },
     {
       "$ref": "schemaPost.json"
+    },
+    {
+      "anyOf": [
+        {
+          "required": ["name"]
+        },
+        {
+          "required": ["company"]
+        }
+      ],
+      "messages": {
+        "anyOf": "Name or company required"
+      }
     }
   ]
 }

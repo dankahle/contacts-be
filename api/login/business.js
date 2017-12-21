@@ -36,7 +36,7 @@ module.exports = class LoginBusiness {
   }
 
   login() {
-    const error = Validate.validateObject(req.body, schema);
+    const error = Validate.validateObject(req.body, schema, `${errorPrefix}0021`);
     if (error) {
       next(error);
     } else {
@@ -66,7 +66,7 @@ module.exports = class LoginBusiness {
   }
 
   register() {
-    const error = Validate.validateObject(req.body, schema);
+    const error = Validate.validateObject(req.body, schema, `${errorPrefix}0021`);
     if (error) {
       next(error);
     } else {

@@ -29,7 +29,7 @@ class UsersBusiness {
 
   addOne() {
     const user = req.body;
-    const error = Validate.validateObject(req.body, schemaPost);
+    const error = Validate.validateObject(req.body, schemaPost, `${errorPrefix}0021`);
     if (error) {
       next(error);
     } else {
@@ -61,7 +61,7 @@ class UsersBusiness {
 
   updateOne() {
     const user = req.body;
-    const error = Validate.validateObject(req.body, schema);
+    const error = Validate.validateObject(req.body, schema, `${errorPrefix}0021`);
     if (error) {
       next(error);
     } else {
