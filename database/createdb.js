@@ -1,7 +1,16 @@
-var conn = new Mongo();
+var conn;
 
-var db = conn.getDB('contacts');
-db.dropDatabase()
+// print('env: ' + env);
+
+if (env === 'dev') {
+  conn = new Mongo();
+  var db = conn.getDB('contacts');
+} else if (env === 'prod') {
+  conn = new Mongo('mongodb://dankman:password@ds030817.mongolab.com:30817/dankdb');
+  var db = conn.getDB('dankdb');
+}
+db.contacts.drop();
+db.users.drop();
 
 db.createCollection('contacts');
 db.contacts.createIndex({userId: 1, id: 1}, {unique: true});
@@ -94,3 +103,5 @@ var users = [
 
 db.contacts.insertMany(contacts);
 db.users.insertMany(users);
+
+print('db init env=' + env + ' complete');
