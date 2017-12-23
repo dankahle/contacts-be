@@ -39,14 +39,6 @@ module.exports = new Promise(function (resolve, reject) {
     let port = process.env.PORT || config.get('port');
 
     const app = express();
-    // redirect to https in prod
-    app.use(function(req, res, next) {
-      if (process.env.NODE_ENV === 'production' && req.protocol === 'http') {
-        res.redirect('https://' + req.headers.host + req.url);
-      }
-      next();
-    })
-
     app.use(expressMongoDb(config.get('database')));
 
     var corsOptions = {
