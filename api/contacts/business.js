@@ -1,6 +1,6 @@
 const chance = new require('chance')(),
   schema = require('./schema/schema.json'),
-  schemaPost = require('./schema/schemaPost.json'),
+  schemaPost = require('./schema/schema-post.json'),
   ContactsData = require('./data'),
   base = require('node-base'),
   Validate = base.Validate,
