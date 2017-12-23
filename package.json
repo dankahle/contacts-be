@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "engines": {
-    "node": ">=8.9.0"
+    "node": "8.9.0"
   },
   "scripts": {
     "test": "./init-db-unit.sh && ./node_modules/mocha/bin/mocha test/** --reporter spec --exit --timeout 2000",
