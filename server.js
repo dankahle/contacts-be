@@ -51,7 +51,7 @@ module.exports = new Promise(function (resolve, reject) {
     app.use(expressMongoDb(config.get('database')));
 
     var corsOptions = {
-      origin: config.get('corsDomain'),
+      origin: config.get('corsOrigin'),
       credentials: true
     }
     app.use(cors(corsOptions));

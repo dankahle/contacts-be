@@ -1,7 +1,7 @@
 {
   "ssl": false,
   "port": 3000,
-  "corsDomain": "http://localhost:4200",
+  "corsOrigin": ["http://localhost:4200", "http://localhost:3005"],
   "database": "mongodb://localhost/contacts",
   "nodeBase": {
     "middleware": {
