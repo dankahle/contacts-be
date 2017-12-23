@@ -1,12 +1,13 @@
 var conn;
 
-// print('env: ' + env);
+print('db init env=' + env + ' start');
 
 if (env === 'dev') {
   conn = new Mongo();
   var db = conn.getDB('contacts');
 } else if (env === 'prod') {
-  conn = new Mongo('mongodb://dankman:password@ds030817.mongolab.com:30817/dankdb');
+  const connstr = `mongodb://${user}:${pass}@ds030817.mongolab.com:30817/dankdb`;
+  conn = new Mongo(connstr);
   var db = conn.getDB('dankdb');
 }
 db.contacts.drop();
@@ -104,4 +105,4 @@ var users = [
 db.contacts.insertMany(contacts);
 db.users.insertMany(users);
 
-print('db init env=' + env + ' complete');
+print('db init complete');
