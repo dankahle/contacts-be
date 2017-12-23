@@ -1,6 +1,6 @@
 {
   "ssl": false,
-  "corsOrigin": "https://dankahle.github.io/contacts-fe",
+  "corsOrigin": "https://dankahle.github.io",
   "database": "mongodb://dankman:password@ds030817.mongolab.com:30817/dankdb",
   "nodeBase": {
   }
