@@ -44,8 +44,9 @@ module.exports = new Promise(function (resolve, reject) {
       if (process.env.NODE_ENV === 'production' && req.get('x-forwarded-proto') !== 'https') {
         console.log('redirect http to https', req.get('x-forwarded-proto'));
         res.redirect('https://' + req.headers.host + req.url);
+      } else {
+        next();
       }
-      next();
     })
 
     app.use(expressMongoDb(config.get('database')));
