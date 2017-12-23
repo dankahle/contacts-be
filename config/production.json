@@ -1,6 +1,5 @@
 {
   "ssl": true,
-  "port": 443,
   "corsDomain": "https://github gh-pages",
   "database": "mongodb://dankman:password@ds030817.mongolab.com:30817/dankdb",
   "nodeBase": {

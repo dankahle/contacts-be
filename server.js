@@ -36,8 +36,7 @@ module.exports = new Promise(function (resolve, reject) {
     baseConfig.setConfig(config.get('nodeBase'));
 
     let init = false;
-
-    let port = config.get('port');
+    let port = process.env.PORT || config.get('port');
 
     const app = express();
     app.use(expressMongoDb(config.get('database')));
