@@ -2,6 +2,10 @@
   "name": "contacts-be",
   "version": "1.0.0",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dankahle/contacts-be.git"
+  },
   "main": "server.js",
   "engines": {
     "node": "8.9.0"
@@ -12,10 +16,6 @@
     "seed": "./initdb.sh dev",
     "seedmlab": "./initdb.sh prod",
     "seedunit": "./initdbunit.sh"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dankahle/contacts-be.git"
   },
   "dependencies": {
     "api-error-handler": "^1.0.0",
