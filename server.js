@@ -64,6 +64,10 @@ module.exports = new Promise(function (resolve, reject) {
       throw new Error('cause-error message');
     })
 
+    app.get('/crash-site', function (req, res) {
+      process.exit(666);
+    })
+
     app.use('/docs', docsRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/register', registerRouter);
