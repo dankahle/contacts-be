@@ -85,7 +85,7 @@ var contacts = [
         "label" : "no protocol"
       }
     ],
-    "notes" : "dsfsdaf sdf sadf asdf sdaf asdf sad fasd fa sdf sadfas dfasd ds sdfsdaf sdaf sdafsda f sda f sadf sadf asd f asdfas df asd f asdfsdfsdfsd\none\ntwo\nthree\n"
+    "notes" : "dsfsdaf sdf sadf asdf sdaf asdf sad\none\ntwo\nthree"
   },
   {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2', name: 'brenda', labels:[], emails: [], phones: [], addresses: [], websites: []},
   {userId: dankUserId, id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3', name: 'martha', labels:[labelOne], emails: [], phones: [], addresses: [], websites: []},
