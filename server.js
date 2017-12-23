@@ -48,6 +48,7 @@ module.exports = new Promise(function (resolve, reject) {
       }
     })
 
+    console.log('>>>>>>>>>>>>>dbconn', process.env.connString || config.get('database'));
     app.use(expressMongoDb(process.env.connString || config.get('database')));
 
     var corsOptions = {
