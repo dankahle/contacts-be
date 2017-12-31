@@ -26,6 +26,13 @@ mongodb:
 * mlab hosting
 
 ### get started  
+
+**clone the project**  
+```
+git clone https://github.com/dankahle/contacts-be.git
+npm install
+```
+  
 **initialize the local mongodb database**
 ```
 npm run seed
