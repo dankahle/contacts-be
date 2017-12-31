@@ -27,20 +27,20 @@ mongodb:
 
 ### get started  
 **initialize the local mongodb database**
-```bash
+```
 npm run seed
 ```
 **start server**
-```bash
+```
 npm start (port defaults to 3000, set in config file)
 ```
 **run tests**
-```bash
+```
 npm test
 ```
 
 **view api docs**
-```bash
+```
 http://localhost:3000/docs
 ```
 
