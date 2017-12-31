@@ -1,18 +1,32 @@
 # contacts-be  
 
-The backend rest api for the contacts-fe project
+The backend rest api for the contacts-fe project. This api supports both login/register/authentication and users/contacts apis. json schema is used for post/put body validation, and renders mongoose unrequired. The schemas also doubled use for redoc's json schema based documentation. MongoDB's node native driver was very easy to work with and utilized the same api as mongo's client. 
 
 ### features
-* redoc documentation from json schema
-* tv4 json schema validation
-* mongodb node native driver for mongo access
-* node-base project (separate repo) for shared node functionality
-* confit config file environment specific heirarchy
+* confit config file hierarchy affording common config along with environment specific config. This also allows for node-base config as well
+* mocha/chai unit testing 
+* supertest end-to-end api testing
+* tv4/tv4-formats JSON schema validation
+* whitelisted CORS to afford separate backend/frontend servers
+* morgan logging
+* separation of architecture with each section having its own router/business/data layers
+* JSON schema api documentation via [redoc](https://github.com/Rebilly/ReDoc)
+* JSON schema validation for post/put body
+* mongodb node native driver instead of mongoose for simplicity and consistency between database scripts and data layer code
+* environment specific mongodb initialization scripts
+* cookie based authentication
+* login/register api
+* users/contacts apis
+* http and https capability config controlled
+* heroku hosting
 
-### todo
+mongodb:
+* node native driver instead of mongoose
+* json schema validation for insert/update
+* mlab hosting
 
 ### get started  
-**initialize mongodb database** (assumes a local instance)
+**initialize the local mongodb database**
 ```bash
 npm run seed
 ```
@@ -30,8 +44,9 @@ npm test
 http://localhost:3000/docs
 ```
 
-### issues
-* json schema api docs won't allow sub schemas in "path" section
-* json schema can't be shared by post/put/results cause can't easily remove id property for post definition
-* json schema put can't restrict additionalProperties (false) in its current "allOf" form
+**hitting api with postman**  
+1. login to site (or register)
+2. grab the contents of the dkAuth cookie
+3. create a cookie in postman called dkAuth and paste in the contents from the browser dkAuth cookie
+
 
