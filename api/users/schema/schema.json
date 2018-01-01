@@ -7,7 +7,7 @@
       "required": ["id", "name", "company"]
     },
     {
-      "$ref": "schemaPost.json"
+      "$ref": "schema-post.json"
     }
   ]
 }

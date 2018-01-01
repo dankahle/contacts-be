@@ -60,7 +60,7 @@
             "description": "contact object",
             "required": true,
             "schema": {
-              "$ref": "../../api/contacts/schema/schemaPost.json"
+              "$ref": "../../api/contacts/schema/schema-post.json"
             }
           }
         ],
@@ -227,7 +227,7 @@
             "description": "users object",
             "required": true,
             "schema": {
-              "$ref": "../../api/users/schema/schemaPost.json"
+              "$ref": "../../api/users/schema/schema-post.json"
             }
           }
         ],
