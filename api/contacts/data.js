@@ -23,7 +23,7 @@ class ContactsData {
   addOne(contact) {
     // add properties we expect to be there like mongoose would
     contact.id = contact.id || chance.guid();
-    contact.userId = req.user.id;
+    contact.userId = contact.userId || req.user.id;
     contact.labels = contact.labels || [];
     contact.emails = contact.emails || [];
     contact.phones = contact.phones || [];

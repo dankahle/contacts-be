@@ -5,6 +5,7 @@ const schema = require('./schema/schema.json'),
   Validate = base.Validate,
   BasicError = base.errors.BasicError,
   errorCodes = base.errors.errorCodes,
+  addDemoData = require('./add-demo-data'),
   errorPrefix = '100-';
 
 let req = null, res = null, next = null, dl = null;
@@ -79,12 +80,11 @@ module.exports = class LoginBusiness {
           }
           dl.addOne(user)
             .then(resp => {
-              if(resp.insertedCount === 1) {
-                res.cookie('dkAuth', user, {httpOnly: true});
-                res.send(user);
-              } else {
-                next(new BasicError('User not registered', errorCodes.server_prefix + errorCodes.user_not_registered))
-              }
+              return addDemoData(user, req, res, next);
+            })
+            .then(() => {
+              res.cookie('dkAuth', user, {httpOnly: true});
+              res.send(user);
             })
             .catch(next)
         })
