@@ -67,13 +67,7 @@ module.exports = new Promise(function (resolve, reject) {
       process.exit(666);
     })
 
-    app.use('/docs', docsRouter);
-    app.use('/api/contacts/schema', express.static('api/contacts/schema'));
-    app.use('/api/users/schema', express.static('api/users/schema'));
-    app.use(function(req, res, next) {
-      console.log('here', req.url);
-      next();
-    })
+    app.use(docsRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/register', registerRouter);
     app.use(authenticate());
