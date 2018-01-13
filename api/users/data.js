@@ -35,10 +35,6 @@ class UsersData {
     return db.findOne(query);
   }
 
-  getOneByQuery(query){
-    return db.findOne(query);
-  }
-
   getOneByNameAndCompany(user){
     return db.findOne({name: user.name, });
   }
