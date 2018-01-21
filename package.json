@@ -11,7 +11,7 @@
     "node": "8.9.0"
   },
   "scripts": {
-    "test": "./init-db-unit.sh && ./node_modules/mocha/bin/mocha test/** --reporter spec --exit --timeout 2000",
+    "test": "./initdbunit.sh && NODE_ENV=unit ./node_modules/mocha/bin/mocha test/** --reporter spec --exit --timeout 2000",
     "start": "node server.js",
     "seed": "./initdb.sh dev",
     "seedmlab": "./initdb.sh prod",
