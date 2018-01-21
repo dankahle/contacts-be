@@ -2,20 +2,21 @@ const request = require('supertest'),
   express = require('express'),
   expect = require('chai').expect,
   _ = require('lodash'),
-  server = require('../../server'),
+  _server = require('../../server'),
   base = require('node-base'),
   errorCodes = base.errors.errorCodes,
   Validate = base.Validate,
   schema = require('../../api/contacts/schema/schema.json'),
   errorPrefix = '200-';
 
-let app = null;
+let server = null;
 
 describe('/contacts', function () {
 
   before(function (done) {
-    server.then(function (_app) {
-      app = _app;
+    _server.then(function (_server_) {
+      server = _server_;
+      server.on('close', () => console.log('server closed'))
       done();
     })
   })
@@ -40,7 +41,7 @@ describe('/contacts', function () {
   let dankMongoId;
 
   it('shows endpoint not found', function (done) {
-    request(app)
+    request(server)
       .get('/notthere')
       .expect(404)
       .expect(function(res) {
@@ -51,7 +52,7 @@ describe('/contacts', function () {
   });
 
   it('get all', function (done) {
-    request(app)
+    request(server)
       .get('/api/contacts')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
@@ -68,7 +69,7 @@ describe('/contacts', function () {
   });
 
   it('get by label', function (done) {
-    request(app)
+    request(server)
       .get(`/api/contacts?label=${labelOne.id}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
@@ -85,7 +86,7 @@ describe('/contacts', function () {
   });
 
   it('get one', function (done) {
-    request(app)
+    request(server)
       .get(`/api/contacts/${janeId}`)
       .expect(200)
       .expect(function(res) {
@@ -98,7 +99,7 @@ describe('/contacts', function () {
   });
 
   it('get one 404 not found', function (done) {
-    request(app)
+    request(server)
       .get(`/api/contacts/${id404}`)
       .expect(404)
       .expect(function (res) {
@@ -108,7 +109,7 @@ describe('/contacts', function () {
   });
 
   it('post with no id or labels', function(done) {
-    request(app)
+    request(server)
       .post(`/api/contacts`)
       .send(mary)
       .expect(200)
@@ -122,7 +123,7 @@ describe('/contacts', function () {
   });
 
   it('get all after post mary', function(done) {
-    request(app)
+    request(server)
       .get('/api/contacts')
       .expect(200)
       .expect(function(res) {
@@ -135,7 +136,7 @@ describe('/contacts', function () {
   });
 
   it('post with id and labels', function(done) {
-    request(app)
+    request(server)
       .post(`/api/contacts`)
       .send(kate)
       .expect(200)
@@ -149,7 +150,7 @@ describe('/contacts', function () {
   });
 
   it('get all after post kate', function(done) {
-    request(app)
+    request(server)
       .get('/api/contacts')
       .expect(200)
       .expect(function(res) {
@@ -162,7 +163,7 @@ describe('/contacts', function () {
   });
 
   it('PUT /api/contacts/:id', function (done) {
-    request(app)
+    request(server)
       .put(`/api/contacts/${janeId}`)
       .send({userId: dankUserId, _id: dankMongoId, id: janeId, name: 'dank2'})
       .expect(200)
@@ -177,7 +178,7 @@ describe('/contacts', function () {
   });
 
   it('get one after put', function (done) {
-    request(app)
+    request(server)
       .get(`/api/contacts/${janeId}`)
       .expect(200)
       .expect(function (res) {
@@ -191,13 +192,13 @@ describe('/contacts', function () {
   });
 
   it('deleteOne', function (done) {
-    request(app)
+    request(server)
       .delete(`/api/contacts/${janeId}`)
       .expect(204, done);
   });
 
   it('get all after delete', function (done) {
-    request(app)
+    request(server)
       .get('/api/contacts')
       .expect(200)
       .expect(function (res) {
@@ -210,14 +211,14 @@ describe('/contacts', function () {
   });
 
   it('delete by label', function (done) {
-    request(app)
+    request(server)
       .delete(`/api/contacts?label=${labelOne.id}`)
       .set('Accept', 'application/json')
       .expect(204, done)
   });
 
   it('get all after delete by label', function (done) {
-    request(app)
+    request(server)
       .get('/api/contacts')
       .expect(200)
       .expect(function (res) {

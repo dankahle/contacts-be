@@ -2,26 +2,26 @@ const request = require('supertest'),
   express = require('express'),
   expect = require('chai').expect,
   _ = require('lodash'),
-  server = require('../../server'),
+  _server = require('../../server'),
   base = require('node-base'),
   errorCodes = base.errors.errorCodes,
   Validate = base.Validate,
   schema = require('../../api/users/schema/schema.json'),
   errorPrefix = '300-';
 
-let app = null;
+let server = null;
 
 describe('/users', function() {
 
   before(function(done) {
-    server.then(function (_app) {
-      app = _app;
+    _server.then(function (_server_) {
+      server = _server_;
       done();
     })
   })
 
   after(function(done) {
-    done();
+    server.close(done);
   })
 
   const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
@@ -40,7 +40,7 @@ describe('/users', function() {
 
 
   it('shows enpoint not found', function(done) {
-    request(app)
+    request(server)
       .get('/notthere')
       .expect(404)
       .expect(function(res) {
@@ -51,7 +51,7 @@ describe('/users', function() {
   });
 
   it('get many', function(done) {
-    request(app)
+    request(server)
       .get('/api/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
@@ -68,7 +68,7 @@ describe('/users', function() {
   });
 
   it('get one', function(done) {
-    request(app)
+    request(server)
       .get(`/api/users/${dankId}`)
       .expect(200)
       .expect(function(res) {
@@ -81,7 +81,7 @@ describe('/users', function() {
   });
 
   it('get one 404 not found', function(done) {
-    request(app)
+    request(server)
       .get(`/api/users/${id404}`)
       .expect(404)
       .expect(function(res) {
@@ -91,7 +91,7 @@ describe('/users', function() {
   });
 
   it('post with no id or labels', function(done) {
-    request(app)
+    request(server)
       .post(`/api/users`)
       .send(steve)
       .expect(200)
@@ -106,7 +106,7 @@ describe('/users', function() {
   });
 
   it('get all after post steve', function(done) {
-    request(app)
+    request(server)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
@@ -122,7 +122,7 @@ describe('/users', function() {
   });
 
   it('post with id and labels', function(done) {
-    request(app)
+    request(server)
       .post(`/api/users`)
       .send(john)
       .expect(200)
@@ -140,7 +140,7 @@ describe('/users', function() {
   });
 
   it('get all after post john', function(done) {
-    request(app)
+    request(server)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
@@ -158,7 +158,7 @@ describe('/users', function() {
 
   let lastModifiedTime;
   it('get one before put', function(done) {
-    request(app)
+    request(server)
       .get(`/api/users/${dankId}`)
       .expect(200)
       .expect(function(res) {
@@ -168,7 +168,7 @@ describe('/users', function() {
   });
 
   it('PUT /api/users/:id', function(done) {
-    request(app)
+    request(server)
       .put(`/api/users/${dankId}`)
       .send({_id: dankMongoId, id: dankId, name: 'dank2', company: 'dank co'})
       .expect(200)
@@ -184,7 +184,7 @@ describe('/users', function() {
   });
 
   it('get one after put', function(done) {
-    request(app)
+    request(server)
       .get(`/api/users/${dankId}`)
       .expect(200)
       .expect(function(res) {
@@ -197,13 +197,13 @@ describe('/users', function() {
   });
 
   it('delete', function(done) {
-    request(app)
+    request(server)
       .delete(`/api/users/${dankId}`)
       .expect(204, done);
   });
 
   it('get all after delete', function(done) {
-    request(app)
+    request(server)
       .get('/api/users')
       .expect(200)
       .expect(function(res) {
