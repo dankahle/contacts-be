@@ -20,7 +20,14 @@ module.exports = class LoginBusiness {
   }
 
   getCurrentUser() {
-    if (req.cookies.dkAuth) {
+
+    if (process.env.NODE_ENV === 'unit') {
+      const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
+        labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'},
+        user = {id: dankId, name: 'dank', company: 'dank co', labels: [labelOne]};
+      res.cookie('dkAuth', user, {httpOnly: true});
+      res.send(user);
+    } else if (req.cookies.dkAuth) {
       const user = req.cookies.dkAuth;
       dl.getOne(user.id)
         .then(_user => {

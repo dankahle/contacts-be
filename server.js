@@ -36,7 +36,8 @@ module.exports = new Promise(function (resolve, reject) {
     baseConfig.setConfig(config.get('nodeBase'));
 
     let init = false;
-    let port = process.env.PORT || config.get('port');
+    let port = process.env.NODE_ENV === 'unit'? '3000' : process.env.PORT || config.get('port');
+    console.log('server port', process.env.NODE_ENV, port);
 
     const app = express();
     // redirect to https in prod
