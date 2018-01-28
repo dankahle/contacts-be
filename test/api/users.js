@@ -24,17 +24,19 @@ describe('/users', function() {
     server.close(done);
   })
 
-  const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
-    id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9',
-    labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
-  let dankMongoId;
+  var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
+  var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
+  var dankCompany = 'dank co';
+  var carlUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2';
 
-  const users = [
-    {id: dankId, name: 'dank', company: 'dank co', labels: [labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2', name: 'carl', company: 'carl co', labels: [], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
-    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', company: 'jim co', labels: [labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+  var users = [
+    {id: dankUserId, name: 'dank', company: dankCompany, labels:[labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+    {id: carlUserId, name: 'carl', company: 'carl co', labels:[], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+    {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', company: 'jim co', labels:[labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
   ];
 
+  const id404 = 'c62dac5b-97d8-53a5-9989-cb2f779bc6e9';
+  let dankMongoId;
   const steve = {name: 'steve', company: 'steve co'};
   const john = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e4', name: 'john', company: 'john co', labels:[labelOne]};
 
@@ -69,7 +71,7 @@ describe('/users', function() {
 
   it('get one', function(done) {
     request(server)
-      .get(`/api/users/${dankId}`)
+      .get(`/api/users/${dankUserId}`)
       .expect(200)
       .expect(function(res) {
         const user = res.body;
@@ -159,7 +161,7 @@ describe('/users', function() {
   let lastModifiedTime;
   it('get one before put', function(done) {
     request(server)
-      .get(`/api/users/${dankId}`)
+      .get(`/api/users/${dankUserId}`)
       .expect(200)
       .expect(function(res) {
         lastModifiedTime = new Date(res.body.modified).getTime();
@@ -169,13 +171,13 @@ describe('/users', function() {
 
   it('PUT /api/users/:id', function(done) {
     request(server)
-      .put(`/api/users/${dankId}`)
-      .send({_id: dankMongoId, id: dankId, name: 'dank2', company: 'dank co'})
+      .put(`/api/users/${dankUserId}`)
+      .send({_id: dankMongoId, id: dankUserId, name: 'dank2', company: 'dank co'})
       .expect(200)
       .expect(function(res) {
         const user = res.body;
         expect(user.name).to.be.equal('dank2');
-        expect(user.id).to.equal(dankId);
+        expect(user.id).to.equal(dankUserId);
         expect(user._id).to.equal(dankMongoId);
         expect(new Date(user.modified).getTime()).to.be.greaterThan(lastModifiedTime)
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
@@ -185,11 +187,11 @@ describe('/users', function() {
 
   it('get one after put', function(done) {
     request(server)
-      .get(`/api/users/${dankId}`)
+      .get(`/api/users/${dankUserId}`)
       .expect(200)
       .expect(function(res) {
         expect(res.body.name).to.be.equal('dank2');
-        expect(res.body.id).to.equal(dankId);
+        expect(res.body.id).to.equal(dankUserId);
         expect(res.body._id).to.equal(dankMongoId);
         expect(Validate.validateObject(res.body, schema)).to.be.undefined;
       })
@@ -198,7 +200,7 @@ describe('/users', function() {
 
   it('delete', function(done) {
     request(server)
-      .delete(`/api/users/${dankId}`)
+      .delete(`/api/users/${dankUserId}`)
       .expect(204, done);
   });
 
@@ -209,7 +211,7 @@ describe('/users', function() {
       .expect(function(res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(_.find(arr, {id: dankId})).to.be.undefined;
+        expect(_.find(arr, {id: dankUserId})).to.be.undefined;
         expect(_.map(arr, 'name')).to.be.eql(['carl', 'jim', 'john', 'steve']);
       })
       .end(done)
