@@ -10,6 +10,14 @@ const schema = require('./schema/schema.json'),
 
 let req = null, res = null, next = null, dl = null;
 
+var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
+var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two'};
+var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label zthree'};
+var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
+var dankCompany = 'dank co';
+var unitUser = {id: dankUserId, name: 'dank', company: dankCompany, labels:[labelOne, labelTwo, labelThree], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'};
+
+
 module.exports = class LoginBusiness {
 
   constructor(_req, _res, _next) {
@@ -22,11 +30,8 @@ module.exports = class LoginBusiness {
   getCurrentUser() {
 
     if (process.env.NODE_ENV === 'unit') {
-      const dankId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1',
-        labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'},
-        user = {id: dankId, name: 'dank', company: 'dank co', labels: [labelOne]};
-      res.cookie('dkAuth', user, {httpOnly: true});
-      res.send(user);
+      res.cookie('dkAuth', unitUser, {httpOnly: true});
+      res.send(unitUser);
     } else if (req.cookies.dkAuth) {
       const user = req.cookies.dkAuth;
       dl.getOne(user.id)
