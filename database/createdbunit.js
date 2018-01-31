@@ -12,9 +12,9 @@ db.createCollection('users');
 db.users.createIndex({id: 1}, {unique: true});
 db.users.createIndex({name: 1});
 
-var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
-var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two'};
-var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label zthree'};
+var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', icon: 'label'};
+var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
+var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label zthree', icon: 'label'};
 var labelOneCarl = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'label one carl'};
 var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
 var dankCompany = 'dank co';

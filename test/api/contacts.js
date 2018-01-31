@@ -26,12 +26,12 @@ describe('/contacts', function () {
   })
 
 
-  var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
-  var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two'};
-  var labelOneCarl = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'label one carl'};
-  var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
-  var dankCompany = 'dank co';
+  const labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', icon: 'label'};
+  const labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
+  const dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
+  const dankCompany = 'dank co';
   var carlUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2';
+  var labelOneCarl = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc4e1', name: 'label one carl'};
 
   var contacts = [
     {

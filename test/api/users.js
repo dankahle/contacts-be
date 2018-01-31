@@ -7,7 +7,8 @@ const request = require('supertest'),
   errorCodes = base.errors.errorCodes,
   Validate = base.Validate,
   schema = require('../../api/users/schema/schema.json'),
-  errorPrefix = '300-';
+  errorPrefix = '300-',
+  unitUser = require('../../api/users/unit-user');
 
 let server = null;
 
@@ -24,15 +25,15 @@ describe('/users', function() {
     server.close(done);
   })
 
-  var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one'};
-  var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two'};
-  var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label zthree'};
+  var labelOne = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e1', name: 'label one', icon: 'label'};
+  var labelTwo = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e2', name: 'label two', icon: 'label'};
+  var labelThree = {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc5e3', name: 'label zthree', icon: 'label'};
   var dankUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e1';
   var dankCompany = 'dank co';
   var carlUserId = 'c62dac5b-97d8-53a5-9989-cb2f779bc7e2';
 
   var users = [
-    {id: dankUserId, name: 'dank', company: dankCompany, labels:[labelOne, labelTwo, labelThree], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
+    unitUser,
     {id: carlUserId, name: 'carl', company: 'carl co', labels:[], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
     {id: 'c62dac5b-97d8-53a5-9989-cb2f779bc7e3', name: 'jim', company: 'jim co', labels:[labelOne], created: '2017-12-07T00:00:00.000Z', modified: '2017-12-08T00:00:00.000Z'},
   ];
