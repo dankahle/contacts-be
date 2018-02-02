@@ -6,8 +6,7 @@ const schema = require('./schema/schema.json'),
   BasicError = base.errors.BasicError,
   errorCodes = base.errors.errorCodes,
   addDemoData = require('./add-demo-data'),
-  errorPrefix = '100-',
-  unitUser = require('../users/unit-user');
+  errorPrefix = '100-'
 
 let req = null, res = null, next = null, dl = null;
 
@@ -23,8 +22,16 @@ module.exports = class LoginBusiness {
   getCurrentUser() {
 
     if (process.env.NODE_ENV === 'unit') {
-      res.cookie('dkAuth', unitUser, {httpOnly: true});
-      res.send(unitUser);
+      dl.getOne('c62dac5b-97d8-53a5-9989-cb2f779bc7e1')
+        .then(_user => {
+          if (_user) {
+            res.cookie('dkAuth', _user, {httpOnly: true});
+            res.send(_user);
+          } else {
+            next(new BasicError('User not found', errorCodes.server_prefix + errorCodes.resource_not_found, 404));
+          }
+        })
+        .catch(next);
     } else if (req.cookies.dkAuth) {
       const user = req.cookies.dkAuth;
       dl.getOne(user.id)
