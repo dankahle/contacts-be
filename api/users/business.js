@@ -1,4 +1,5 @@
 const chance = new require('chance')(),
+  _ = require('lodash'),
   schema = require('./schema/schema.json'),
   schemaPost = require('./schema/schema-post.json'),
   UsersData = require('./data'),
@@ -23,7 +24,10 @@ class UsersBusiness {
   getMany() {
     const query = {};
     dl.getMany(query)
-      .then(users => res.send(users))
+      .then(users => {
+        users = _.sortBy(users, user => user.name.toLowerCase())
+        res.send(users);
+      })
       .catch(e => next(e));
   }
 

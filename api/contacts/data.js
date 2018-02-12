@@ -16,7 +16,6 @@ class ContactsData {
   getMany(query) {
     query.userId = req.user.id;
     return db.find(query)
-      .sort({name: 1})
       .toArray();
   }
 

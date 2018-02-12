@@ -1,4 +1,5 @@
 const chance = new require('chance')(),
+  _ = require('lodash'),
   schema = require('./schema/schema.json'),
   schemaPost = require('./schema/schema-post.json'),
   ContactsData = require('./data'),
@@ -7,6 +8,7 @@ const chance = new require('chance')(),
   BasicError = base.errors.BasicError,
   errorCodes = base.errors.errorCodes,
   errorPrefix = '200-';
+
 
 let req = null, res = null, next = null, dl = null;
 
@@ -23,7 +25,10 @@ class ContactsBusiness {
   getMany() {
     const query = req.query.label ? {labels: {$elemMatch: {id: req.query.label}}} : {};
     dl.getMany(query)
-      .then(contacts => res.send(contacts))
+      .then(contacts => {
+        contacts = _.sortBy(contacts, contact => this.getContactDisplayNameSort(contact));
+        res.send(contacts);
+      })
       .catch(e => next(e));
   }
 
@@ -125,6 +130,11 @@ class ContactsBusiness {
     if (contact.userId && contact.userId !== req.user.id) {
       return new BasicError('Invalid user', `${errorPrefix}0021}`, 400);
     }
+  }
+
+  getContactDisplayNameSort(contact) {
+    return contact.name && contact.company ? contact.name.toLowerCase() + ' - ' + contact.company.toLowerCase() :
+      (contact.name && contact.name.toLowerCase()) || (contact.company && contact.company.toLowerCase());
   }
 
 }

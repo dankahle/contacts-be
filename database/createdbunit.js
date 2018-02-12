@@ -25,7 +25,7 @@ var contacts = [
     userId: dankUserId,
     id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
     name: 'jane',
-    company: 'Jane Co',
+    company: 'jane co',
     jobTitle: 'Manager',
     labels:[labelOne, labelTwo],
     "emails" : [
@@ -75,8 +75,7 @@ var contacts = [
   {
     userId: dankUserId,
     id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2',
-    name: 'brenda',
-    company: 'Brenda Co',
+    name: 'Brenda',
     jobTitle: 'QA',
     labels:[labelTwo],
     "emails" : [
@@ -126,7 +125,6 @@ var contacts = [
   {
     userId: dankUserId,
     id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3',
-    name: 'martha',
     company: 'Martha Co',
     jobTitle: 'Engineer',
     labels:[labelOne],

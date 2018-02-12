@@ -36,59 +36,8 @@ describe('/contacts', function () {
   var contacts = [
     {
       userId: dankUserId,
-      id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
-      name: 'jane',
-      company: 'Jane Co',
-      jobTitle: 'Manager',
-      labels:[labelOne, labelTwo],
-      "emails" : [
-        {
-          "email" : "jane1@gmail.com",
-          "label" : "Work"
-        },
-        {
-          "email" : "jane2@gmail.com",
-          "label" : "Home"
-        }
-      ],
-      "phones" : [
-        {
-          "prefix" : "1",
-          "phone" : "111-222-3333",
-          "label" : "Work"
-        },
-        {
-          "prefix" : "55",
-          "phone" : "112-222-3333",
-          "label" : "Mobile"
-        }
-      ],
-      "addresses" : [
-        {
-          "address" : "952 NE Lovell St. Hillsboro, OR 97124",
-          "label" : "Home"
-        },
-        {
-          "address" : "10260 SW Greenburg Rd #600, Tigard, OR 97223",
-          "label" : "Work"
-        }
-      ],
-      "websites" : [
-        {
-          "website" : "https://www.google.com",
-          "label" : "google"
-        },
-        {
-          "website" : "www.weather.com",
-          "label" : "weather"
-        }
-      ],
-      "notes" : "notes first line\nnotes second line\nnotes third line"
-    },
-    {
-      userId: dankUserId,
       id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e2',
-      name: 'brenda',
+      name: 'Brenda',
       company: 'Brenda Co',
       jobTitle: 'QA',
       labels:[labelTwo],
@@ -138,8 +87,59 @@ describe('/contacts', function () {
     },
     {
       userId: dankUserId,
+      id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e1',
+      name: 'jane',
+      company: 'jane co',
+      jobTitle: 'Manager',
+      labels:[labelOne, labelTwo],
+      "emails" : [
+        {
+          "email" : "jane1@gmail.com",
+          "label" : "Work"
+        },
+        {
+          "email" : "jane2@gmail.com",
+          "label" : "Home"
+        }
+      ],
+      "phones" : [
+        {
+          "prefix" : "1",
+          "phone" : "111-222-3333",
+          "label" : "Work"
+        },
+        {
+          "prefix" : "55",
+          "phone" : "112-222-3333",
+          "label" : "Mobile"
+        }
+      ],
+      "addresses" : [
+        {
+          "address" : "952 NE Lovell St. Hillsboro, OR 97124",
+          "label" : "Home"
+        },
+        {
+          "address" : "10260 SW Greenburg Rd #600, Tigard, OR 97223",
+          "label" : "Work"
+        }
+      ],
+      "websites" : [
+        {
+          "website" : "https://www.google.com",
+          "label" : "google"
+        },
+        {
+          "website" : "www.weather.com",
+          "label" : "weather"
+        }
+      ],
+      "notes" : "notes first line\nnotes second line\nnotes third line"
+    },
+    {
+      userId: dankUserId,
       id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3',
-      name: 'martha',
+      name: 'Martha',
       company: 'Martha Co',
       jobTitle: 'Engineer',
       labels:[labelOne],
@@ -219,7 +219,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(3);
-        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'jane', 'martha']); // should sort
+        expect(_.map(arr, c => c.name || c.company)).to.be.eql(['Brenda', 'jane', 'Martha Co']); // should sort
         arr.forEach(contact => {
           expect(Validate.validateObject(contact, schema)).to.be.undefined;
         })
@@ -236,7 +236,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(2);
-        expect(_.map(arr, 'name')).to.be.eql(['jane', 'martha']);
+        expect(_.map(arr, c => c.name || c.company)).to.be.eql(['jane', 'Martha Co']);
         arr.forEach(contact => {
           expect(Validate.validateObject(contact, schema)).to.be.undefined;
         })
@@ -252,7 +252,7 @@ describe('/contacts', function () {
         const contact = res.body;
         dankMongoId = contact._id;
         delete contact._id;
-        expect(contact).to.eql(contacts[0])
+        expect(contact).to.eql(contacts[1])
       })
       .end(done)
   });
@@ -363,7 +363,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(4);
-        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'kate', 'martha', 'mary']);
+        expect(_.map(arr, c => c.name || c.company)).to.be.eql(['Brenda', 'kate', 'Martha Co', 'mary']);
       })
       .end(done)
 
@@ -383,7 +383,7 @@ describe('/contacts', function () {
       .expect(function (res) {
         const arr = res.body
         expect(arr.length).to.be.equal(2);
-        expect(_.map(arr, 'name')).to.be.eql(['brenda', 'mary']);
+        expect(_.map(arr, 'name')).to.be.eql(['Brenda', 'mary']);
       })
       .end(done)
   });

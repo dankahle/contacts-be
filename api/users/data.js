@@ -15,7 +15,6 @@ class UsersData {
   ////////////// "/"
   getMany(query) {
     return db.find(query)
-      .sort({name:1})
       .toArray();
   }
 
