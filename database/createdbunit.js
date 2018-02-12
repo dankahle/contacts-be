@@ -126,12 +126,10 @@ var contacts = [
     userId: dankUserId,
     id: 'c62dac5b-97d8-53a5-9989-cb2f779bc6e3',
     company: 'Martha Co',
-    jobTitle: 'Engineer',
     labels:[labelOne],
     "emails" : [
       {
-        "email" : "martha1@gmail.com",
-        "label" : "Work"
+        "email" : "martha1@gmail.com"
       },
       {
         "email" : "martha2@gmail.com",
@@ -141,8 +139,7 @@ var contacts = [
     "phones" : [
       {
         "prefix" : "1",
-        "phone" : "111-222-3333",
-        "label" : "Work"
+        "phone" : "111-222-3333"
       },
       {
         "prefix" : "55",
@@ -152,8 +149,7 @@ var contacts = [
     ],
     "addresses" : [
       {
-        "address" : "952 NE Lovell St. Hillsboro, OR 97124",
-        "label" : "Home"
+        "address" : "952 NE Lovell St. Hillsboro, OR 97124"
       },
       {
         "address" : "10260 SW Greenburg Rd #600, Tigard, OR 97223",
@@ -162,8 +158,7 @@ var contacts = [
     ],
     "websites" : [
       {
-        "website" : "https://www.google.com",
-        "label" : "google"
+        "website" : "https://www.google.com"
       },
       {
         "website" : "www.weather.com",
